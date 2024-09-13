@@ -1,0 +1,27 @@
+NotaVenta{id=null, IVA=21, fechaCreacion=2024-09-17, vencimiento=2024-09-27, comprobante=NOTADEBITO, tipoCambio=1045, interesMensual=3,
+ formaDePago='Contado',totalUSD=null, subtotalUSD=null, totalARS=null, totalUSDInteres=null, estado=null, 
+detalles=[DetalleNotaVenta{id=null, notaVenta=null, producto=null, precioCosto=null, precioVenta=null, subtotalCosto=null, subtotalVenta=null, cantidad=null, ganancia=null}, 
+DetalleNotaVenta{id=null, notaVenta=null, 
+    producto=Producto{id=1, nombre='null', precioCosto=null, detallesVentas=null}, precioCosto=10, precioVenta=null, subtotalCosto=null, subtotalVenta=null, cantidad=100, ganancia=10}], 
+cliente=Cliente{id=2, cuentaCorriente='null', email='null', notasVentas=null},
+vendedor=Vendedor{id=2, nombre='null', notasVentas=null}
+}
+
+
+
+NotaVenta{id=null, IVA=10.5, fechaCreacion=2024-09-09, vencimiento=2024-09-09, comprobante=NOTADEBITO,
+     tipoCambio=1040, interesMensual=3, formaDePago='Contado', totalUSD=null, subtotalUSD=null,
+     totalARS=null, totalUSDInteres=null, estado=null,
+detalles=   [DetalleNotaVenta{id=null, notaVenta=null, producto=null, precioCosto=null, precioVenta=null,
+                    subtotalCosto=null, subtotalVenta=null, cantidad=null, ganancia=null},
+             DetalleNotaVenta{id=null, notaVenta=null, producto=Producto{id=1, nombre='null', precioCosto=null, detallesVentas=null},
+             precioCosto=10, precioVenta=null, subtotalCosto=null, subtotalVenta=null, cantidad=1000, ganancia=8}, 
+            DetalleNotaVenta{id=null, notaVenta=null, producto=null, precioCosto=null, precioVenta=null, subtotalCosto=null,
+              subtotalVenta=null, cantidad=null, ganancia=null}, 
+            DetalleNotaVenta{id=null, notaVenta=null, producto=null, precioCosto=null, precioVenta=null, subtotalCosto=null, 
+            subtotalVenta=null, cantidad=null, ganancia=null}, DetalleNotaVenta{id=null, notaVenta=null, 
+                producto=Producto{id=4, nombre='null', precioCosto=null, detallesVentas=null},
+                 precioCosto=5, precioVenta=null, subtotalCosto=null, subtotalVenta=null, cantidad=200, ganancia=8}],
+                  cliente=Cliente{id=1, cuentaCorriente='null', email='null', notasVentas=null},
+                   vendedor=Vendedor{id=2, nombre='null', notasVentas=null}
+}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Registrar Nota de Venta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Ajuste personalizado para limitar el ancho y centrar el contenido */
+        .custom-container {
+            max-width: 75%;
+            /* Ocupa el 80% del ancho de la pantalla grande */
+            margin: 0 auto;
+            /* Centrar el contenedor horizontalmente */
+        }
+
+        .logo {
+            max-height: 50px;
+            max-width: 300px;
+        }
+
+
+        @media (max-width: 768px) {
+            .custom-container {
+                max-width: 100%;
+                /* En pantallas pequeñas, ocupa todo el ancho */
+            }
+        }
+
+        body {
+            background-color: whitesmoke;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-success text-lg-center">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">NotasVenta</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item ">
+                        <a class="nav-link fw-bold text-dark" href="/productos/create">Productos</a>
+                      </li>
+                      <li class="nav-item ">
+                        <a class="nav-link fw-bold text-dark" href="/vendedores/create">Vendedores</a>
+                      </li>
+                      <li class="nav-item ">
+                        <a class="nav-link fw-bold text-dark" href="/clientes/create">Clientes</a>
+                      </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-bold text-dark" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Notas de Venta
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/notasVentas/crearNotaVenta">Crear</a></li>
+                            <li><a class="dropdown-item" href="/notasVentas/listar">Listar todas</a></li>
+                        </ul>
+                    </li>
+                   
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container custom-container my-4"> <!-- Añadimos la clase personalizada -->
+        <div class="row">
+
+            <!--<img th:src="@{/images/LogoAgromatorrales.png}" alt="Descripción de la imagen" class="col-2 my-4 logo">-->
+            <h2 class="h2 col-12 my-4 text-lg-center fs-1 fw-bold text-success">Registrar Nota de Venta</h2>
+            <!-- Centramos el título -->
+        </div>
+        <form th:action="@{/notasVentas/save}" th:object="${notaVenta}" method="post">
+            <div class="row mb-2">
+                <!-- Selección de Cliente -->
+                <div class="col-12 col-md-4 mb-2">
+                    <label for="cliente" class="form-label fw-bolder">Cliente</label>
+                    <select class="form-select" id="cliente" th:field="*{cliente.id}">
+                        <option th:each="cliente : ${clientes}" th:value="${cliente.id}"
+                            th:text="${cliente.cuentaCorriente}">
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Fecha de creación -->
+                <div class="col-12 col-md-4 mb-2">
+                    <label for="fechaCreacion" class="form-label fw-bolder">Fecha de Creación</label>
+                    <input type="date" class="form-control" id="fechaCreacion" th:field="*{fechaCreacion}">
+                </div>
+
+                <!-- Fecha de vencimiento -->
+                <div class="col-12 col-md-4 mb-2">
+                    <label for="vencimiento" class="form-label fw-bolder">Fecha de Vencimiento</label>
+                    <input type="date" class="form-control" id="vencimiento" th:field="*{vencimiento}">
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <!-- Comprobante -->
+                <div class="col-12 col-md-4 mb-2">
+                    <label for="comprobante" class="form-label fw-bolder">Comprobante</label>
+                    <select class="form-select" id="comprobante" th:field="*{comprobante}">
+                        <option value="FACTURA">Factura</option>
+                        <option value="NOTADEBITO">Nota de Débito</option>
+                        <option value="NOTACREDITO">Nota de Crédito</option>
+                        <option value="DEBITOINTERNO">Débito Interno</option>
+                    </select>
+                </div>
+
+                <!-- Tipo de cambio -->
+                <div class="col-12 col-md-4 mb-2">
+                    <label for="tipoCambio" class="form-label fw-bolder">Tipo de Cambio</label>
+                    <input type="number" step="0.01" class="form-control" id="tipoCambio" th:field="*{tipoCambio}">
+                </div>
+
+                <!-- Forma de pago -->
+                <div class="col-12 col-md-4 mb-2">
+                    <label for="formaDePago" class="form-label fw-bolder">Forma de Pago</label>
+                    <input type="text" class="form-control" id="formaDePago" th:field="*{formaDePago}">
+                </div>
+            </div>
+
+            <!-- IVA e Interés Mensual -->
+            <div class="row mb-2">
+                <div class="col-12 col-md-4 mb-2">
+                    <label for="iva" class="form-label fw-bolder">IVA</label>
+                    <select class="form-select" id="iva" th:field="*{IVA}">
+                        <option value="0">0%</option>
+                        <option value="10.5">10.5%</option>
+                        <option value="21">21%</option>
+                    </select>
+                </div>
+
+                <div class="col-12 col-md-4 mb-2">
+                    <label for="interesMensual" class="form-label fw-bolder">Interés Mensual %</label>
+                    <input type="number" step="0.01" class="form-control" id="interesMensual"
+                        th:field="*{interesMensual}">
+                </div>
+
+                <!-- Selección de Vendedor -->
+                <div class="col-12 col-md-4 mb-2">
+                    <label for="vendedor" class="form-label fw-bolder">Vendedor</label>
+                    <select class="form-select" id="vendedor" th:field="*{vendedor.id}">
+                        <option th:each="vendedor : ${vendedores}" th:value="${vendedor.id}"
+                            th:text="${vendedor.nombre}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Buscador de productos -->
+            <div class="mb-3">
+                <label for="buscarProducto" class="form-label fw-bolder">Buscar Producto</label>
+                <input type="text" id="buscarProducto" class="form-control" placeholder="Escribe para buscar...">
+                <div id="resultadosBusqueda" class="list-group mt-2"></div>
+            </div>
+
+            <!-- Tabla de productos seleccionados -->
+            <div class="table-responsive mb-3">
+                <label for="productos" class="form-label fw-bolder">Productos seleccionados</label>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Precio Costo</th>
+                            <th>Cantidad L/KG</th>
+                            <th>Ganancia %</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productosSeleccionados">
+                        <!-- Aquí se añadirán los productos seleccionados dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar Nota de Venta</button>
+        </form>
+    </div>
+
+    <!-- Librerías JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Buscar productos dinámicamente
+        $('#buscarProducto').on('input', function () {
+            let query = $(this).val();
+            if (query.length > 2) {
+                $.ajax({
+                    url: '/productos/buscar', // Ruta donde procesarás la búsqueda de productos
+                    method: 'GET',
+                    data: { nombre: query },
+                    success: function (data) {
+                        let resultados = '';
+                        data.forEach(function (producto) {
+                            resultados += `<a href="#" class="list-group-item list-group-item-action" 
+                        data-id="${producto.id}" 
+                        data-nombre="${producto.nombre}" 
+                        data-precio-costo="${producto.precioCosto}">
+                        ${producto.nombre} - Precio Costo: ${producto.precioCosto}
+                    </a>`;
+                        });
+                        $('#resultadosBusqueda').html(resultados);
+                    }
+                });
+            } else {
+                $('#resultadosBusqueda').html('');
+            }
+        });
+
+        let productoIndex = 0;
+
+        // Añadir producto a la tabla de productos seleccionados
+        $('#resultadosBusqueda').on('click', 'a', function (e) {
+            e.preventDefault();
+
+            let idProducto = $(this).data('id');
+            let nombreProducto = $(this).data('nombre');
+            let precioCosto = $(this).data('precio-costo');
+
+            // Verificar si el producto ya está en la tabla
+            if ($('#productosSeleccionados tr[data-id="' + idProducto + '"]').length > 0) {
+                alert('Este producto ya ha sido seleccionado.');
+                return; // Salir si el producto ya está seleccionado
+            }
+
+            console.log("ID del producto seleccionado: " + idProducto);
+            // Añadir fila con los datos del producto
+            let nuevaFila = `
+        <tr data-id="${idProducto}">
+            <td>${nombreProducto}</td>
+            <td>${precioCosto}</td>
+            <td><input type="number" class="form-control" name="detalles[${productoIndex}].cantidad" step="0.01"></td>
+            <td><input type="number" class="form-control" name="detalles[${productoIndex}].ganancia" step="0.01"></td>
+            <td><button type="button" class="btn btn-danger btn-sm eliminarProducto">Eliminar</button></td>
+            <input type="hidden" name="detalles[${productoIndex}].producto.id" value="${idProducto}">
+            <input type="hidden" name="detalles[${productoIndex}].precioCosto" value="${precioCosto}">
+        </tr>
+    `;
+            $('#productosSeleccionados').append(nuevaFila);
+
+            // Incrementar el contador para asegurar un índice único
+            productoIndex++;
+
+            // Limpiar resultados de búsqueda
+            $('#resultadosBusqueda').html('');
+            $('#buscarProducto').val('');
+        });
+
+        // Delegación de eventos para eliminar productos de la tabla
+        $('#productosSeleccionados').on('click', '.eliminarProducto', function () {
+            $(this).closest('tr').remove();  // Eliminar la fila correspondiente
+        });
+
+
+    </script>
+
+</body>
+
+</html>
