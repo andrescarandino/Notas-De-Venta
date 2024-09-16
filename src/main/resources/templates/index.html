@@ -46,16 +46,16 @@
                 <ul class="navbar-nav">
                     <li class="nav-item ">
                         <a class="nav-link fw-bold text-dark" href="/productos/create">Productos</a>
-                      </li>
-                      <li class="nav-item ">
+                    </li>
+                    <li class="nav-item ">
                         <a class="nav-link fw-bold text-dark" href="/vendedores/create">Vendedores</a>
-                      </li>
-                      <li class="nav-item ">
+                    </li>
+                    <li class="nav-item ">
                         <a class="nav-link fw-bold text-dark" href="/clientes/create">Clientes</a>
-                      </li>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-bold text-dark" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                        <a class="nav-link dropdown-toggle fw-bold text-dark" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             Notas de Venta
                         </a>
                         <ul class="dropdown-menu">
@@ -63,7 +63,7 @@
                             <li><a class="dropdown-item" href="/notasVentas/listar">Listar todas</a></li>
                         </ul>
                     </li>
-                   
+
                 </ul>
             </div>
         </div>
@@ -76,10 +76,11 @@
             <h2 class="h2 col-12 my-4 text-lg-center fs-1 fw-bold text-success">Registrar Nota de Venta</h2>
             <!-- Centramos el título -->
         </div>
-        <form th:action="@{/notasVentas/save}" th:object="${notaVenta}" method="post">
+        <form th:action="@{/notasVentas/save}" th:object="${notaVenta}" method="post" class="needs-validation"
+            novalidate>
             <div class="row mb-2">
                 <!-- Selección de Cliente -->
-                <div class="col-12 col-md-4 mb-2">
+                <div class="col-12 col-md-3 mb-2">
                     <label for="cliente" class="form-label fw-bolder">Cliente</label>
                     <select class="form-select" id="cliente" th:field="*{cliente.id}">
                         <option th:each="cliente : ${clientes}" th:value="${cliente.id}"
@@ -88,22 +89,8 @@
                     </select>
                 </div>
 
-                <!-- Fecha de creación -->
-                <div class="col-12 col-md-4 mb-2">
-                    <label for="fechaCreacion" class="form-label fw-bolder">Fecha de Creación</label>
-                    <input type="date" class="form-control" id="fechaCreacion" th:field="*{fechaCreacion}">
-                </div>
-
-                <!-- Fecha de vencimiento -->
-                <div class="col-12 col-md-4 mb-2">
-                    <label for="vencimiento" class="form-label fw-bolder">Fecha de Vencimiento</label>
-                    <input type="date" class="form-control" id="vencimiento" th:field="*{vencimiento}">
-                </div>
-            </div>
-
-            <div class="row mb-2">
-                <!-- Comprobante -->
-                <div class="col-12 col-md-4 mb-2">
+                <!-- Comprobante-->
+                <div class="col-12 col-md-3 mb-2">
                     <label for="comprobante" class="form-label fw-bolder">Comprobante</label>
                     <select class="form-select" id="comprobante" th:field="*{comprobante}">
                         <option value="FACTURA">Factura</option>
@@ -111,24 +98,49 @@
                         <option value="NOTACREDITO">Nota de Crédito</option>
                         <option value="DEBITOINTERNO">Débito Interno</option>
                     </select>
+                </div>  
+                
+
+
+                <!-- Fecha de vencimiento -->
+                <div class="col-12 col-md-3 mb-2">
+                    <label for="vencimiento" class="form-label fw-bolder">Fecha de Vencimiento</label>
+                    <input type="date" class="form-control" id="vencimiento" th:field="*{vencimiento}" required>
+                    <div class="invalid-feedback">
+                        Es necesaria una fecha de vencimiento
+                    </div>
                 </div>
 
                 <!-- Tipo de cambio -->
-                <div class="col-12 col-md-4 mb-2">
+                <div class="col-12 col-md-3 mb-2">
                     <label for="tipoCambio" class="form-label fw-bolder">Tipo de Cambio</label>
-                    <input type="number" step="0.01" class="form-control" id="tipoCambio" th:field="*{tipoCambio}">
+                    <input type="number" step="0.01" class="form-control" id="tipoCambio" th:field="*{tipoCambio}"
+                        required>
+                    <div class="invalid-feedback">
+                        Es necesario un tipo de cambio
+                    </div>
                 </div>
 
-                <!-- Forma de pago -->
-                <div class="col-12 col-md-4 mb-2">
-                    <label for="formaDePago" class="form-label fw-bolder">Forma de Pago</label>
-                    <input type="text" class="form-control" id="formaDePago" th:field="*{formaDePago}">
-                </div>
             </div>
 
-            <!-- IVA e Interés Mensual -->
             <div class="row mb-2">
-                <div class="col-12 col-md-4 mb-2">
+
+                <!-- Forma de pago -->
+                <div class="col-12 col-md-3 mb-2">
+                    <label for="formaDePago" class="form-label fw-bolder">Forma de Pago</label>
+                    <select class="form-select" id="formaDePago" th:field="*{formaDePago}">
+                        <option value="EFECTIVO">Efectivo</option>
+                        <option value="CHEQUE">Cheque</option>
+                        <option value="CANJECEREAL">Canje de cereal</option>
+                        <option value="TARJETACREDITO">Tarjeta de crédito</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Es necesario un tipo de cambio
+                    </div>
+
+                </div>
+                <!-- IVA -->
+                <div class="col-12 col-md-3 mb-2">
                     <label for="iva" class="form-label fw-bolder">IVA</label>
                     <select class="form-select" id="iva" th:field="*{IVA}">
                         <option value="0">0%</option>
@@ -136,15 +148,18 @@
                         <option value="21">21%</option>
                     </select>
                 </div>
-
-                <div class="col-12 col-md-4 mb-2">
+                <!-- Interés Mensual -->
+                <div class="col-12 col-md-3 mb-2">
                     <label for="interesMensual" class="form-label fw-bolder">Interés Mensual %</label>
                     <input type="number" step="0.01" class="form-control" id="interesMensual"
-                        th:field="*{interesMensual}">
+                        th:field="*{interesMensual}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un interés mensual
+                    </div>
                 </div>
 
                 <!-- Selección de Vendedor -->
-                <div class="col-12 col-md-4 mb-2">
+                <div class="col-12 col-md-3 mb-2">
                     <label for="vendedor" class="form-label fw-bolder">Vendedor</label>
                     <select class="form-select" id="vendedor" th:field="*{vendedor.id}">
                         <option th:each="vendedor : ${vendedores}" th:value="${vendedor.id}"
@@ -153,6 +168,7 @@
                     </select>
                 </div>
             </div>
+
 
             <!-- Buscador de productos -->
             <div class="mb-3">
@@ -191,7 +207,7 @@
         // Buscar productos dinámicamente
         $('#buscarProducto').on('input', function () {
             let query = $(this).val();
-            if (query.length > 2) {
+            if (query.length > 0) {
                 $.ajax({
                     url: '/productos/buscar', // Ruta donde procesarás la búsqueda de productos
                     method: 'GET',
@@ -201,9 +217,8 @@
                         data.forEach(function (producto) {
                             resultados += `<a href="#" class="list-group-item list-group-item-action" 
                         data-id="${producto.id}" 
-                        data-nombre="${producto.nombre}" 
-                        data-precio-costo="${producto.precioCosto}">
-                        ${producto.nombre} - Precio Costo: ${producto.precioCosto}
+                        data-nombre="${producto.nombre}" >
+                        ${producto.nombre}
                     </a>`;
                         });
                         $('#resultadosBusqueda').html(resultados);
@@ -235,12 +250,11 @@
             let nuevaFila = `
         <tr data-id="${idProducto}">
             <td>${nombreProducto}</td>
-            <td>${precioCosto}</td>
-            <td><input type="number" class="form-control" name="detalles[${productoIndex}].cantidad" step="0.01"></td>
-            <td><input type="number" class="form-control" name="detalles[${productoIndex}].ganancia" step="0.01"></td>
+            <td><input type="number" class="form-control" name="detalles[${productoIndex}].precioCosto" step="0.01" required></td>
+            <td><input type="number" class="form-control" name="detalles[${productoIndex}].cantidad" step="0.01" required></td>
+            <td><input type="number" class="form-control" name="detalles[${productoIndex}].ganancia" step="0.01" required></td>
             <td><button type="button" class="btn btn-danger btn-sm eliminarProducto">Eliminar</button></td>
             <input type="hidden" name="detalles[${productoIndex}].producto.id" value="${idProducto}">
-            <input type="hidden" name="detalles[${productoIndex}].precioCosto" value="${precioCosto}">
         </tr>
     `;
             $('#productosSeleccionados').append(nuevaFila);
@@ -259,6 +273,26 @@
         });
 
 
+    </script>
+    <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
     </script>
 
 </body>

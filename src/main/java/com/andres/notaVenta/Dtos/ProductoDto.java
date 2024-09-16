@@ -10,11 +10,9 @@ import java.math.BigDecimal;
 public class ProductoDto {
     private Long id;
     private String nombre;
-    private BigDecimal precioCosto;
 
-    public ProductoDto(Long id, String nombre, BigDecimal precioCosto) {
+    public ProductoDto(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.precioCosto = precioCosto;
     }
 }

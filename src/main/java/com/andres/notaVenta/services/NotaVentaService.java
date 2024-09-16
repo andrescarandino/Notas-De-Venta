@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -27,7 +28,7 @@ public class NotaVentaService {
         Cliente cliente = clienteRepository.findById(notaVenta.getCliente().getId()).orElseThrow();
         Vendedor vendedor = vendedorRepository.findById(notaVenta.getVendedor().getId()).orElseThrow();
 
-
+        notaVenta.setFechaCreacion(LocalDate.now());
         notaVenta.setCliente(cliente);
         notaVenta.setVendedor(vendedor);
 
@@ -37,7 +38,7 @@ public class NotaVentaService {
             Producto producto = productoRepository.findById(detalle.getProducto().getId()).orElseThrow();
             detalle.setProducto(producto);
             detalle.setNombre(producto.getNombre());
-            detalle.setPrecioCosto(producto.getPrecioCosto());
+            detalle.setPrecioCosto(detalle.getPrecioCosto());
             detalle.setSubtotalCosto(detalle.calcularSubtotalCosto());
             detalle.setPrecioVenta(detalle.calcularPrecioVenta());
             detalle.setSubtotalVenta(detalle.calcularSubtotalVenta());

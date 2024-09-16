@@ -24,13 +24,9 @@ public class ProductoController {
     public ResponseEntity<List<ProductoDto>> buscarProductos(@RequestParam("nombre") String nombre) {
         List<Producto> productos = productoService.buscarPorNombre(nombre);
         List<ProductoDto> productosDTO = productos.stream()
-                .map(p -> new ProductoDto(p.getId(), p.getNombre(), p.getPrecioCosto()))
+                .map(p -> new ProductoDto(p.getId(), p.getNombre()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(productosDTO);
     }
-
-
-
-
 
 }

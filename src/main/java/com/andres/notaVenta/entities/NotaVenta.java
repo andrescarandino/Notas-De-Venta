@@ -64,7 +64,10 @@ public class NotaVenta {
     }
 
     public long calcularMeses() {
-        return ChronoUnit.MONTHS.between(this.fechaCreacion, this.vencimiento);
+        LocalDate fechaInicio = this.fechaCreacion.withDayOfMonth(1); // Ajustar al primer día del mes
+        LocalDate fechaFin = this.vencimiento.withDayOfMonth(1); // Ajustar al primer día del mes
+
+        return ChronoUnit.MONTHS.between(fechaInicio, fechaFin);
     }
 
     public BigDecimal calcularTotalConIntereses() {
