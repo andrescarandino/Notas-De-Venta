@@ -40,11 +40,11 @@ public class DetalleNotaVenta {
     }
 
     public BigDecimal calcularSubtotalCosto() {
-        return this.producto.getPrecioCosto().multiply(this.getCantidad());
+        return this.getPrecioCosto().multiply(this.getCantidad());
     }
 
     public BigDecimal calcularPrecioVenta() {
-        return this.getProducto().getPrecioCosto().multiply(
+        return this.getPrecioCosto().multiply(
                 BigDecimal.ONE.add(ganancia.divide(BigDecimal.valueOf(100)))
         );
     }
@@ -64,6 +64,7 @@ public class DetalleNotaVenta {
                 ", subtotalVenta=" + subtotalVenta +
                 ", cantidad=" + cantidad +
                 ", ganancia=" + ganancia +
+                "productoid=" + producto.getId() +
                 '}';
     }
 }

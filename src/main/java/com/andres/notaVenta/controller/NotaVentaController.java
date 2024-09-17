@@ -46,6 +46,7 @@ public class NotaVentaController {
 
     @PostMapping("/save")
     public String saveNotaVenta(@ModelAttribute NotaVenta notaVenta) {
+        System.out.println(notaVenta.getDetalles());
         notaVentaService.saveNotaVenta(notaVenta);
         return "redirect:/notasVentas/listar";
     }

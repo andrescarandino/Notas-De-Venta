@@ -20,15 +20,13 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nombre;
-    private BigDecimal precioCosto;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
     private List<DetalleNotaVenta> detallesVentas;
 
-    public Producto(Long id, String nombre, BigDecimal precioCosto) {
+    public Producto(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
-        this.precioCosto = precioCosto;
     }
 
     @Override
@@ -36,7 +34,6 @@ public class Producto {
         return "Producto{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", precioCosto=" + precioCosto +
                 '}';
     }
 }

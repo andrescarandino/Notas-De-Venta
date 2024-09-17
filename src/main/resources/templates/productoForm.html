@@ -47,10 +47,6 @@
                 <label for="nombre" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="nombre" th:field="*{nombre}" placeholder="Nombre del producto" required>
             </div>
-            <div class="mb-3 col-2">
-                <label for="precioCosto" class="form-label">Precio Costo</label>
-                <input type="number" step="0.01" class="form-control" id="precioCosto" th:field="*{precioCosto}" placeholder="Precio de costo" required>
-            </div>
             <div class="mb-3 col-2 d-flex align-items-end">
                 <button type="submit" class="btn btn-primary w-100">Guardar</button>
             </div>
@@ -64,7 +60,6 @@
                 <tr>
                     <th>ID</th>
                     <th>nombre</th>
-                    <th>precio Costo</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -72,7 +67,6 @@
                 <tr th:each="producto : ${listaProductos}"  class="table-row" th:data-id="${producto.id}">
                     <td th:text="${producto.id}"></td>
                     <td th:text="${producto.nombre}"></td>
-                    <td th:text="${producto.precioCosto}"></td>
                     <td>
                         <!-- Botón de Eliminar -->
                         <form th:action="@{/productos/delete/{id}(id=${producto.id})}" method="post" style="display:inline-block">
