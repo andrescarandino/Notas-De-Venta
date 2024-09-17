@@ -64,6 +64,7 @@ public class DetalleNotaVenta {
                 ", subtotalVenta=" + subtotalVenta +
                 ", cantidad=" + cantidad +
                 ", ganancia=" + ganancia +
+                "productoid=" + producto.getId() +
                 '}';
     }
 }

@@ -23,10 +23,12 @@ public class NotaVenta {
     private BigDecimal IVA;
     private LocalDate fechaCreacion;
     private LocalDate vencimiento;
+    @Enumerated(EnumType.STRING)
     private Comprobante comprobante;
     private BigDecimal tipoCambio;
     private BigDecimal interesMensual;
-    private String formaDePago;
+    @Enumerated(EnumType.STRING)
+    private FormaDePago formaDePago;
 
     //Hay que calcular
     private BigDecimal totalUSD;
@@ -52,7 +54,7 @@ public class NotaVenta {
 
     public NotaVenta(BigDecimal IVA, LocalDate fechaCreacion, LocalDate vencimiento,
                      Comprobante comprobante, BigDecimal tipoCambio, BigDecimal interesMensual,
-                     String formaDePago) {
+                     FormaDePago formaDePago) {
         this.IVA = IVA;
         this.fechaCreacion = fechaCreacion;
         this.vencimiento = vencimiento;

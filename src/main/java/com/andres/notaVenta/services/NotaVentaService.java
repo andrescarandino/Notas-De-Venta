@@ -33,8 +33,6 @@ public class NotaVentaService {
         notaVenta.setVendedor(vendedor);
 
         for (DetalleNotaVenta detalle : notaVenta.getDetalles()){
-            Long productoId = detalle.getProducto().getId();
-            System.out.println("Buscando producto con ID: " + productoId);
             Producto producto = productoRepository.findById(detalle.getProducto().getId()).orElseThrow();
             detalle.setProducto(producto);
             detalle.setNombre(producto.getNombre());

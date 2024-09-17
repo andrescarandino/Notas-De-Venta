@@ -82,7 +82,8 @@
                 <!-- Selección de Cliente -->
                 <div class="col-12 col-md-3 mb-2">
                     <label for="cliente" class="form-label fw-bolder">Cliente</label>
-                    <select class="form-select" id="cliente" th:field="*{cliente.id}">
+                    <select class="form-select" id="cliente" th:field="*{cliente.id}" minlength="1" required>
+                        <option value="" ></option>
                         <option th:each="cliente : ${clientes}" th:value="${cliente.id}"
                             th:text="${cliente.cuentaCorriente}">
                         </option>
@@ -92,20 +93,25 @@
                 <!-- Comprobante-->
                 <div class="col-12 col-md-3 mb-2">
                     <label for="comprobante" class="form-label fw-bolder">Comprobante</label>
-                    <select class="form-select" id="comprobante" th:field="*{comprobante}">
+                    <select class="form-select" id="comprobante" th:field="*{comprobante}" minlength="1" required>
+                        <option value="" ></option>
                         <option value="FACTURA">Factura</option>
                         <option value="NOTADEBITO">Nota de Débito</option>
                         <option value="NOTACREDITO">Nota de Crédito</option>
                         <option value="DEBITOINTERNO">Débito Interno</option>
                     </select>
-                </div>  
-                
+                    <div class="invalid-feedback">
+                        Es necesario un comprobante
+                    </div>
+                </div>
+
 
 
                 <!-- Fecha de vencimiento -->
                 <div class="col-12 col-md-3 mb-2">
                     <label for="vencimiento" class="form-label fw-bolder">Fecha de Vencimiento</label>
-                    <input type="date" class="form-control" id="vencimiento" th:field="*{vencimiento}" required>
+                    <input type="date" class="form-control" id="vencimiento" th:field="*{vencimiento}"
+                        th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
                     <div class="invalid-feedback">
                         Es necesaria una fecha de vencimiento
                     </div>
@@ -128,7 +134,8 @@
                 <!-- Forma de pago -->
                 <div class="col-12 col-md-3 mb-2">
                     <label for="formaDePago" class="form-label fw-bolder">Forma de Pago</label>
-                    <select class="form-select" id="formaDePago" th:field="*{formaDePago}">
+                    <select class="form-select" id="formaDePago" th:field="*{formaDePago}" minlength="1" required>
+                        <option value=""></option>
                         <option value="EFECTIVO">Efectivo</option>
                         <option value="CHEQUE">Cheque</option>
                         <option value="CANJECEREAL">Canje de cereal</option>
@@ -142,11 +149,15 @@
                 <!-- IVA -->
                 <div class="col-12 col-md-3 mb-2">
                     <label for="iva" class="form-label fw-bolder">IVA</label>
-                    <select class="form-select" id="iva" th:field="*{IVA}">
+                    <select class="form-select" id="iva" th:field="*{IVA}" minlength="1" required>
+                        <option value=""></option>
                         <option value="0">0%</option>
                         <option value="10.5">10.5%</option>
                         <option value="21">21%</option>
                     </select>
+                    <div class="invalid-feedback">
+                        Es necesario un IVA
+                    </div>
                 </div>
                 <!-- Interés Mensual -->
                 <div class="col-12 col-md-3 mb-2">
@@ -161,11 +172,15 @@
                 <!-- Selección de Vendedor -->
                 <div class="col-12 col-md-3 mb-2">
                     <label for="vendedor" class="form-label fw-bolder">Vendedor</label>
-                    <select class="form-select" id="vendedor" th:field="*{vendedor.id}">
+                    <select class="form-select" id="vendedor" th:field="*{vendedor.id}" minlength="1" required>
+                        <option value=""></option>
                         <option th:each="vendedor : ${vendedores}" th:value="${vendedor.id}"
                             th:text="${vendedor.nombre}">
                         </option>
                     </select>
+                    <div class="invalid-feedback">
+                        Es necesario un vendedor
+                    </div>
                 </div>
             </div>
 
@@ -237,7 +252,6 @@
 
             let idProducto = $(this).data('id');
             let nombreProducto = $(this).data('nombre');
-            let precioCosto = $(this).data('precio-costo');
 
             // Verificar si el producto ya está en la tabla
             if ($('#productosSeleccionados tr[data-id="' + idProducto + '"]').length > 0) {
@@ -270,8 +284,26 @@
         // Delegación de eventos para eliminar productos de la tabla
         $('#productosSeleccionados').on('click', '.eliminarProducto', function () {
             $(this).closest('tr').remove();  // Eliminar la fila correspondiente
+
+            reindexarProductos();
         });
 
+        // Función para reindexar los productos en la tabla
+        function reindexarProductos() {
+            $('#productosSeleccionados tr').each(function (index, fila) {
+                // Actualizar los nombres de los inputs con el nuevo índice
+                $(fila).find('input, select').each(function () {
+                    let nameAttr = $(this).attr('name');
+                    if (nameAttr) {
+                        let newName = nameAttr.replace(/\[\d+\]/, '[' + index + ']');
+                        $(this).attr('name', newName);
+                    }
+                });
+            });
+
+            // Actualizar el índice para el próximo producto a agregar
+            productoIndex = $('#productosSeleccionados tr').length;
+        }
 
     </script>
     <script>
@@ -280,6 +312,7 @@
 
             // Fetch all the forms we want to apply custom Bootstrap validation styles to
             const forms = document.querySelectorAll('.needs-validation')
+
 
             // Loop over them and prevent submission
             Array.from(forms).forEach(form => {
