@@ -22,8 +22,14 @@ public class Vendedor {
 
     private String nombre;
 
+    private String username;
+    private String password;
+
     @OneToMany(mappedBy = "vendedor")
     private List<NotaVenta> notasVentas;
+
+    @OneToMany(mappedBy = "vendedor")
+    private List<Cliente> clientes;
 
     public Vendedor(Long id, String nombre) {
         this.id = id;

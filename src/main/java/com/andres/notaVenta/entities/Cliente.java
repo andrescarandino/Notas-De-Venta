@@ -21,6 +21,10 @@ public class Cliente {
 
     private String cuentaCorriente;
     private String email;
+    @ManyToOne
+    @JoinColumn(name = "vendedor_id")
+    private Vendedor vendedor;
+
     @OneToMany(mappedBy = "cliente")
     private List<NotaVenta> notasVentas;
 
