@@ -8,6 +8,6 @@ public class indexController {
 
     @GetMapping()
     public String paginaInicio() {
-        return "redirect:/notasVentas/listar";
+        return "redirect:/notasVentas/crearNotaVenta";
     }
 }

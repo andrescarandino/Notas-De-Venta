@@ -8,6 +8,8 @@ import com.andres.notaVenta.services.ClienteService;
 import com.andres.notaVenta.services.NotaVentaService;
 import com.andres.notaVenta.services.VendedorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,7 @@ public class NotaVentaController {
     @Autowired
     VendedorService vendedorService;
 
+
     @GetMapping("/crearNotaVenta")
     public String mostrarFormulario(Model model) {
         NotaVenta notaVenta = new NotaVenta();
@@ -44,12 +47,14 @@ public class NotaVentaController {
         return "index";
     }
 
+
     @PostMapping("/save")
     public String saveNotaVenta(@ModelAttribute NotaVenta notaVenta) {
         System.out.println(notaVenta.getDetalles());
         notaVentaService.saveNotaVenta(notaVenta);
         return "redirect:/notasVentas/listar";
     }
+
 
     @GetMapping("/listar")
     public String listarNotasVentas(Model model) {
@@ -59,6 +64,15 @@ public class NotaVentaController {
         return "listarNotasVentas";
     }
 
+
+    @GetMapping("/listarVendedor")
+    public String listarNotasVendedor(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        System.out.println(username);
+        List<NotaVenta> notasVenta = notaVentaService.findByVendedorUsername(username);
+        model.addAttribute("notasVenta", notasVenta);
+        return "notasVentasVendedor";
+    }
 
     @GetMapping("/detalle/{id}")
     public String mostrarNotaVenta(@PathVariable Long id, Model model) {

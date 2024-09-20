@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NotaVentaService {
@@ -67,5 +69,13 @@ public class NotaVentaService {
 
     public void eliminarPorId(Long id) {
         notaVentaRepository.deleteById(id);
+    }
+
+    public List<NotaVenta> findByVendedorUsername(String username) {
+        Optional<Vendedor> vendedorOpt = vendedorRepository.findByAppUserUsername(username);
+        if (vendedorOpt.isPresent()) {
+            return vendedorOpt.get().getNotasVentas(); // Devuelve las notas de venta del vendedor
+        }
+        return new ArrayList<>(); // En caso de no encontrar vendedor, retorna una lista vacía
     }
 }

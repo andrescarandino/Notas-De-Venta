@@ -1,5 +1,6 @@
 package com.andres.notaVenta.entities;
 
+import com.andres.notaVenta.security.AppUser;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,8 +23,9 @@ public class Vendedor {
 
     private String nombre;
 
-    private String username;
-    private String password;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private AppUser appUser;
 
     @OneToMany(mappedBy = "vendedor")
     private List<NotaVenta> notasVentas;

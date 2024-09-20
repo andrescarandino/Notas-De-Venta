@@ -25,4 +25,9 @@ public class ClienteService {
     public void guardar(Cliente cliente) {
         clienteRepository.save(cliente);
     }
+
+    // Método para buscar clientes por el username del vendedor
+    public List<Cliente> findByVendedorUsername(String username) {
+        return clienteRepository.findByVendedor_Nombre(username);
+    }
 }
