@@ -36,10 +36,11 @@ public class NotaVentaVendedorController {
     }
 
     @GetMapping("/crear")
-    public String mostrarFormulario(Model model) {
+    public String mostrarFormulario(Model model, Authentication authentication) {
         NotaVenta notaVenta = new NotaVenta();
         List<Producto> productos = new ArrayList<>();
-        List<Cliente> clientes =   clienteService.listarTodos();
+        String username = authentication.getName();
+        List<Cliente> clientes =   clienteService.ListarClientesPorVendedor(username);
 
         model.addAttribute("notaVenta", notaVenta);
         model.addAttribute("productos", productos);
