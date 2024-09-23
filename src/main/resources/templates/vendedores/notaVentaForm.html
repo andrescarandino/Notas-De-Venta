@@ -167,12 +167,6 @@
                         Es necesario un tipo de cambio
                     </div>
                 </div>
-
-
-
-
-
-
             </div>
 
             <div class="row mb-2 ">
@@ -231,20 +225,27 @@
         // Buscar productos dinámicamente
         $('#buscarProducto').on('input', function () {
             let query = $(this).val();
-            if (query.length > 0) {
+            if (query.length > 2) {
                 $.ajax({
                     url: '/productos/buscar', // Ruta donde procesarás la búsqueda de productos
                     method: 'GET',
                     data: { nombre: query },
                     success: function (data) {
                         let resultados = '';
-                        data.forEach(function (producto) {
-                            resultados += `<a href="#" class="list-group-item list-group-item-action" 
-                        data-id="${producto.id}" 
-                        data-nombre="${producto.nombre}" >
-                        ${producto.nombre}
-                    </a>`;
-                        });
+
+                        if (data.length === 0) {
+                            // Mostrar mensaje cuando no hay resultados
+                            resultados = '<p class="text-muted">No se encontraron productos.</p>';
+                        } else {
+                            // Mostrar resultados si los hay
+                            data.forEach(function (producto) {
+                                resultados += `<a href="#" class="list-group-item list-group-item-action" 
+                            data-id="${producto.id}" 
+                            data-nombre="${producto.nombre}">
+                            ${producto.nombre}
+                        </a>`;
+                            });
+                        }
                         $('#resultadosBusqueda').html(resultados);
                     }
                 });
@@ -252,8 +253,6 @@
                 $('#resultadosBusqueda').html('');
             }
         });
-
-        let productoIndex = 0;
 
         // Añadir producto a la tabla de productos seleccionados
         $('#resultadosBusqueda').on('click', 'a', function (e) {
@@ -293,7 +292,6 @@
         // Delegación de eventos para eliminar productos de la tabla
         $('#productosSeleccionados').on('click', '.eliminarProducto', function () {
             $(this).closest('tr').remove();  // Eliminar la fila correspondiente
-
             reindexarProductos();
         });
 
@@ -313,6 +311,7 @@
             // Actualizar el índice para el próximo producto a agregar
             productoIndex = $('#productosSeleccionados tr').length;
         }
+
 
     </script>
     <script>
