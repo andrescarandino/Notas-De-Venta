@@ -43,7 +43,8 @@ public class Vendedor {
         return "Vendedor{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", notasVentas=" + notasVentas +
+                ", Username=" + getAppUser().getUsername() +
+                ", roles= " + getAppUser().getRoles().toString()+
                 '}';
     }
 }

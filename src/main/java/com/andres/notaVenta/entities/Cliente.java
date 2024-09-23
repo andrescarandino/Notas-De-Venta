@@ -41,6 +41,7 @@ public class Cliente {
                 ", cuentaCorriente='" + cuentaCorriente + '\'' +
                 ", email='" + email + '\'' +
                 ", notasVentas=" + notasVentas +
+                "vendedor= " + vendedor.getId() +
                 '}';
     }
 }

@@ -23,7 +23,7 @@ public class ProductosController {
         List<Producto> productos = productoService.listarTodos();
         model.addAttribute("producto", new Producto());
         model.addAttribute("listaProductos", productos);
-        return "productoForm"; // Nombre del archivo Thymeleaf sin la extensión
+        return "/vendedores/productoForm"; // Nombre del archivo Thymeleaf sin la extensión
     }
 
     @PostMapping("/delete/{id}")

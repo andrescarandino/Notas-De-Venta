@@ -52,11 +52,11 @@ public class NotaVentaApplication {
 				}
 
 				// Crear usuario Vendedor con contraseña cifrada
-				if (appUserRepository.findByUsername("vendedor") == null) {
+				if (appUserRepository.findByUsername("prueba2") == null) {
 					AppUser vendedor = new AppUser();
-					vendedor.setUsername("vendedor");
-					vendedor.setPassword(passwordEncoder.encode("vendedor123"));
-					vendedor.setEnabled(true);
+					vendedor.setUsername("prueba2");
+					vendedor.setPassword(passwordEncoder.encode("prueba123"));
+					vendedor.setEnabled(false);
 					vendedor.setRoles(Set.of(vendedorRole));
 					appUserRepository.save(vendedor);
 				}

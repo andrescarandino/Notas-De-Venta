@@ -1,4 +1,4 @@
-package com.andres.notaVenta.controller;
+package com.andres.notaVenta.controller.vendedor;
 
 import com.andres.notaVenta.entities.Cliente;
 import com.andres.notaVenta.entities.NotaVenta;
@@ -8,86 +8,66 @@ import com.andres.notaVenta.services.ClienteService;
 import com.andres.notaVenta.services.NotaVentaService;
 import com.andres.notaVenta.services.VendedorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 @Controller
-@RequestMapping("/notasVentas")
-public class NotaVentaController {
+@RequestMapping("/vendedor/notasVentas")
+public class NotaVentaVendedorController {
 
     @Autowired
     NotaVentaService notaVentaService;
     @Autowired
-    ClienteService clienteService;
-    @Autowired
     VendedorService vendedorService;
+    @Autowired
+    ClienteService clienteService;
 
+    @GetMapping
+    public String listar(Model model, Authentication auth) {
+        String username = auth.getName();
+        List<NotaVenta> notasVenta = notaVentaService.findByVendedorUsername(username);
+        model.addAttribute("notasVenta", notasVenta);
+        return "vendedores/notasVentasVendedor";
+    }
 
-    @GetMapping("/crearNotaVenta")
+    @GetMapping("/crear")
     public String mostrarFormulario(Model model) {
         NotaVenta notaVenta = new NotaVenta();
         List<Producto> productos = new ArrayList<>();
         List<Cliente> clientes =   clienteService.listarTodos();
-        List<Vendedor> vendedores = vendedorService.listarTodos();
 
         model.addAttribute("notaVenta", notaVenta);
         model.addAttribute("productos", productos);
         model.addAttribute("clientes", clientes);
-        model.addAttribute("vendedores", vendedores);
 
-        return "index";
+        return "vendedores/notaVentaForm";
     }
 
-
-    @PostMapping("/save")
-    public String saveNotaVenta(@ModelAttribute NotaVenta notaVenta) {
-        System.out.println(notaVenta.getDetalles());
+    @PostMapping("/guardar")
+    public String saveNotaVenta(@ModelAttribute NotaVenta notaVenta, Authentication auth) {
+        Vendedor vendedor = vendedorService.obtenerVendedorPorUsername(auth.getName());
+        notaVenta.setVendedor(vendedor);
         notaVentaService.saveNotaVenta(notaVenta);
-        return "redirect:/notasVentas/listar";
-    }
-
-
-    @GetMapping("/listar")
-    public String listarNotasVentas(Model model) {
-        List<NotaVenta> notasVenta = notaVentaService.listar();
-        System.out.println(notasVenta);
-        model.addAttribute("notasVenta", notasVenta);
-        return "listarNotasVentas";
-    }
-
-
-    @GetMapping("/listarVendedor")
-    public String listarNotasVendedor(Model model, Authentication authentication) {
-        String username = authentication.getName();
-        System.out.println(username);
-        List<NotaVenta> notasVenta = notaVentaService.findByVendedorUsername(username);
-        model.addAttribute("notasVenta", notasVenta);
-        return "notasVentasVendedor";
+        return "redirect:/vendedor/notasVentas";
     }
 
     @GetMapping("/detalle/{id}")
     public String mostrarNotaVenta(@PathVariable Long id, Model model) {
         NotaVenta notaVenta = notaVentaService.obtenerNotaVentaPorId(id);
         model.addAttribute("notaVenta", notaVenta);
-        return "notaVentaAlDetalle";
+        return "vendedores/DetalleVendedor";
     }
 
     @PostMapping("/delete/{id}")
     public String eliminarNotaVenta(@PathVariable Long id){
         notaVentaService.eliminarPorId(id);
-        return "redirect:/notasVentas/listar";
+        return "redirect:/vendedor/notasVentas";
     }
-
-
 
 
 

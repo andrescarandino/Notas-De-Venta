@@ -50,7 +50,7 @@ public class AppUser {
         this();
         this.username = username;
         this.password = password;
-        this.enabled = true;
+        this.enabled = false;
 
     }
 

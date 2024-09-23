@@ -43,7 +43,7 @@ public class NotaVentaService {
             detalle.setPrecioVenta(detalle.calcularPrecioVenta());
             detalle.setSubtotalVenta(detalle.calcularSubtotalVenta());
             detalle.setNotaVenta(notaVenta);
-            System.out.println(detalle);
+
         }
         notaVenta.setEstado(Estado.EN_ESPERA);
 
@@ -51,12 +51,8 @@ public class NotaVentaService {
         notaVenta.setTotalUSD(notaVenta.calcularTotalUSD());
         notaVenta.setTotalIVA(notaVenta.calcularTotalIVA());
         notaVenta.setTotalARS(notaVenta.calcularTotalARS());
-
-
         notaVentaRepository.save(notaVenta);
 
-
-        System.out.println(notaVenta);
     }
 
     public NotaVenta obtenerNotaVentaPorId(Long id) {
