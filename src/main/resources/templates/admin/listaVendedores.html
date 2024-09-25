@@ -22,7 +22,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-center me-5" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+                <ul class="nav nav-pills nav-fill">
                     <li class="nav-item ">
                         <a class="nav-link  fs-5 fw-bold text-dark" href="/admin/notasVentas">Notas de Venta</a>
                     </li>
@@ -48,7 +48,7 @@
 
 
     <div class="container mt-4">
-        <h2 class="h2 col-12 my-4 text-lg-center fs-1 fw-bold text-dark text-opacity-80">Listado de Vendedores</h2>
+        <h2 class="h2 col-12 my-4 text-center fs-1 fw-bold text-dark text-opacity-75">Listado de Vendedores</h2>
         <table class="table table-hover table-bordered table-md">
             <thead class="table-warning">
                 <tr class="text-center">
@@ -59,7 +59,7 @@
                 </tr>
             </thead>
             <tbody class="text-center">
-                <tr th:each="vendedor : ${vendedores}" class="table-row" th:data-id="${vendedor.id}">
+                <tr role="button" th:each="vendedor : ${vendedores}" class="table-row" th:data-id="${vendedor.id}">
                     <td th:text="${vendedor.nombre}"></td>
                     <td th:text="${vendedor.AppUser.username}"></td>
                     <td class="col-2 text-lg-center">

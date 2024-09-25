@@ -23,7 +23,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-center me-5 pe-5" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+                <ul class="nav nav-pills nav-fill">
                     <li class="nav-item">
                         <a class="nav-link fs-5 fw-bold text-dark" href="/productos/create">Productos</a>
                     </li>
@@ -35,6 +35,7 @@
                         <ul class="dropdown-menu bg-dark-subtle">
                             <li><a class="dropdown-item fs-6 fw-bold text-dark"
                                     href="/vendedor/clientes/crear">Nuevo</a></li>
+                                    
                             <li><a class="dropdown-item fs-6 fw-bold text-dark" href="/vendedor/clientes">Listar</a>
                             </li>
                         </ul>
@@ -47,6 +48,7 @@
                         <ul class="dropdown-menu bg-dark-subtle">
                             <li><a class="dropdown-item fs-6 fw-bold text-dark"
                                     href="/vendedor/notasVentas/crear">Nuevo</a></li>
+                                    
                             <li><a class="dropdown-item fs-6 fw-bold text-dark" href="/vendedor/notasVentas">Listar</a>
                             </li>
                         </ul>
@@ -62,7 +64,7 @@
     </nav>
 
     <div class="container md-4 text-center mt-5 align-items-center">
-        <h2 class="h2 col-12 my-4 text-lg-center fs-1 fw-bold text-dark text-opacity-80 ">Guardar Cliente</h2>
+        <h2 class="h2 col-12 my-4 text-lg-center fs-1 fw-bold text-dark text-opacity-75 ">Guardar Cliente</h2>
         <form th:action="@{/vendedor/clientes/guardar}" th:object="${cliente}" method="post" class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-4">
