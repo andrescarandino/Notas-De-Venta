@@ -1,7 +1,6 @@
 package com.andres.notaVenta.services;
 
 import com.andres.notaVenta.entities.Cliente;
-import com.andres.notaVenta.entities.Producto;
 import com.andres.notaVenta.entities.Vendedor;
 import com.andres.notaVenta.repositories.ClienteRepository;
 import com.andres.notaVenta.repositories.VendedorRepository;
@@ -30,18 +29,19 @@ public class ClienteService {
     }
 
     public void guardar(Cliente cliente, String username) {
-        Optional<Vendedor> vendedor = vendedorRepository.findByAppUserUsername(username);
+        //Error cuando tengo mayusculas
+        Optional<Vendedor> vendedor = vendedorRepository.findByAppUserUsernameIgnoreCase(username);
+        System.out.println(vendedor.get());
         if (vendedor.isPresent()){
             cliente.setVendedor(vendedor.get());
         }
         clienteRepository.save(cliente);
-        System.out.println(cliente);;
     }
 
 
     public List<Cliente> ListarClientesPorVendedor(String username) {
         String nombre = "";
-        Optional<Vendedor> vendedor = vendedorRepository.findByAppUserUsername(username);
+        Optional<Vendedor> vendedor = vendedorRepository.findByAppUserUsernameIgnoreCase(username);
         if (vendedor.isPresent()){
             nombre = vendedor.get().getNombre();
         }

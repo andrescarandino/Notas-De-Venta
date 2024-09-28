@@ -1,7 +1,6 @@
 package com.andres.notaVenta.services;
 
 import com.andres.notaVenta.Dtos.VendedorForm;
-import com.andres.notaVenta.entities.Cliente;
 import com.andres.notaVenta.entities.Vendedor;
 import com.andres.notaVenta.repositories.AppUserRepository;
 import com.andres.notaVenta.repositories.RoleRepository;
@@ -13,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VendedorService {
@@ -44,8 +42,12 @@ public class VendedorService {
         appUser.setEnabled(false);
 
         // Asignar rol VENDEDOR
-        Role vendedorRole = roleRepository.findByName("VENDEDOR");
-        appUser.getRoles().add(vendedorRole);
+        Role vendedorRole = roleRepository.findByName("ROLE_VENDEDOR");
+        System.out.println(vendedorRole);
+        if (vendedorRole != null){
+            appUser.addRole(vendedorRole);
+            System.out.println("Roles del usuario: " + appUser.getRoles());
+        }
         appUserRepository.save(appUser);
 
         // Crear Vendedor
@@ -53,10 +55,11 @@ public class VendedorService {
         vendedor.setNombre(vendedorForm.getNombre());
         vendedor.setAppUser(appUser);
         vendedorRepository.save(vendedor);
+        System.out.println(vendedor);
     }
 
     public Vendedor obtenerVendedorPorUsername(String userName){
-        Vendedor vendedor = vendedorRepository.findByAppUserUsername(userName).orElseThrow();
+        Vendedor vendedor = vendedorRepository.findByAppUserUsernameIgnoreCase(userName).orElseThrow();
         System.out.println(vendedor);
         return vendedor;
     }

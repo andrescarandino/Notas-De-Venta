@@ -16,7 +16,8 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-dark bg-opacity-25 text-lg-center">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/admin/notasVentas"><img src="/images/logo.png" alt="Logo"><Strong>NotasVentas</Strong></a>
+            <a class="navbar-brand" href="/admin/notasVentas"><img src="/images/logo.png"
+                    alt="Logo"><Strong>NotasVentas</Strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,7 +33,8 @@
                             Vendedores
                         </a>
                         <ul class="dropdown-menu bg-dark-subtle  ">
-                            <li><a class="dropdown-item fs-6 fw-bold text-dark" href="/admin/vendedores/crear">Crear</a></li>
+                            <li><a class="dropdown-item fs-6 fw-bold text-dark" href="/admin/vendedores/crear">Crear</a>
+                            </li>
                             <li><a class="dropdown-item fs-6 fw-bold text-dark" href="/admin/vendedores">Listar</a></li>
                         </ul>
                     </li>
@@ -47,10 +49,11 @@
     </nav>
 
 
-    <div class="container mt-4">
-        <h2 class="h2 col-12 my-4 text-center fs-1 fw-bold text-dark text-opacity-75">Listado de Vendedores</h2>
-        <table class="table table-hover table-bordered table-md">
-            <thead class="table-warning">
+    <div class="container mt-5 d-flex justify-content-center">
+        
+        <table class="table table-hover w-75 caption-top">
+            <caption><strong>Lista de vendedores</strong></caption>
+            <thead>
                 <tr class="text-center">
                     <th>Nombre</th>
                     <th>Usuario</th>
@@ -71,13 +74,37 @@
                     </td>
                 </tr>
             </tbody>
-        </table>
+    </div>
+    <div aria-live="polite" aria-atomic="true" class="position-relative">
+        <div class="toast-container position-fixed bottom-0 end-0 p-3">
+            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true"
+                data-bs-delay="5000" th:if="${mensajeError != null}">
+                <div class="toast-header">
+                    <strong class="me-auto">Error</strong>
+                    <small class="text-muted">Ahora</small>
+                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body" th:text="${mensajeError}">
+                    <!-- Mensaje de error aparecerá aquí -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Librerías JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        // Activar el toast si hay un mensaje de error
+        document.addEventListener('DOMContentLoaded', function () {
+            var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+            toastElList.forEach(function (toastEl) {
+                var toast = new bootstrap.Toast(toastEl);
+                toast.show(); // Mostrar el toast si está presente
+            });
+        });
+    </script>
 </body>
 
 </html>

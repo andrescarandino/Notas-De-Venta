@@ -60,5 +60,10 @@ public class AppUser {
                 .collect(Collectors.toList());
     }
 
+    public void addRole(Role role){
+        this.roles.add(role);
+        role.getUsers().add(this);
+    }
+
 
 }

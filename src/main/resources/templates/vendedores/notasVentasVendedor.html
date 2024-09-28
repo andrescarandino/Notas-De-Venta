@@ -24,14 +24,14 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-dark bg-opacity-25 text-lg-center">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/admin/notasVentas"><img src="/images/logo.png"
+            <a class="navbar-brand" href="/vendedor/notasVentas"><img src="/images/logo.png"
                     alt="Logo"><Strong>NotasVentas</Strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-center me-5 pe-5" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+                <ul class="nav nav-pills nav-fill">
                     <li class="nav-item">
                         <a class="nav-link fs-5 fw-bold text-dark" href="/productos/create">Productos</a>
                     </li>
@@ -43,6 +43,7 @@
                         <ul class="dropdown-menu bg-dark-subtle">
                             <li><a class="dropdown-item fs-6 fw-bold text-dark"
                                     href="/vendedor/clientes/crear">Nuevo</a></li>
+                                    
                             <li><a class="dropdown-item fs-6 fw-bold text-dark" href="/vendedor/clientes">Listar</a>
                             </li>
                         </ul>
@@ -55,6 +56,7 @@
                         <ul class="dropdown-menu bg-dark-subtle">
                             <li><a class="dropdown-item fs-6 fw-bold text-dark"
                                     href="/vendedor/notasVentas/crear">Nuevo</a></li>
+                                    
                             <li><a class="dropdown-item fs-6 fw-bold text-dark" href="/vendedor/notasVentas">Listar</a>
                             </li>
                         </ul>
@@ -68,16 +70,16 @@
             </form>
         </div>
     </nav>
-    <div class="container-md">
-        <h2 class="h2 col-12 my-4 text-lg-center fs-1 fw-bold text-dark text-opacity-75">Listado de Notas de Venta</h2>
-        <table class="table table-hover table-bordered">
-            <thead class="table-warning">
+    <div class="container-md mt-5 ms-auto d-flex justify-content-center">
+        <table class="table table-hover caption-top w-75" >
+            <caption><strong>Lista de Notas de Venta</strong></caption>
+            <thead >
                 <tr class="text-center">
                     <th>Cliente</th>
                     <th>Fecha de Creación</th>
                     <th>Vencimiento</th>
                     <th>Total en USD</th>
-                    <th>Total en ARS</th>
+                    <!-- <th>Total en ARS</th> -->
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -87,7 +89,7 @@
                     <td th:text="${notaVenta.fechaCreacion}"></td>
                     <td th:text="${notaVenta.vencimiento}"></td>
                     <td th:text="${notaVenta.totalUSD}"></td>
-                    <td th:text="${notaVenta.totalARS}"></td>
+                    <!-- <td th:text="${notaVenta.totalARS}"></td> -->
 
                     <td >
                         <!-- Botón de Eliminar -->

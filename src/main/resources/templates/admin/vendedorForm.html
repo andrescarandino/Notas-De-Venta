@@ -50,25 +50,28 @@
         <form th:action="@{/admin/vendedores/guardar}" th:object="${vendedorForm}" method="post" class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-12 col-md-4">
-                    <div class="mb-2">
-                        <label class="form-label fw-bolder">Nombre Vendedor:</label>
+                    <div class="mb-4">
+                        <h3 class="text-center text-dark text-opacity-75">Registrar vendedor</h3>
+                    </div>
+                    <div class="form-floating mb-3">
                         <input type="text" th:field="*{nombre}" class="form-control"
                         placeholder="Nombre" />
+                        <label class="form-label">Nombre Vendedor</label>
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label fw-bolder">Nombre de Usuario:</label>
+                    <div class="form-floating mb-3">
                         <input type="text" th:field="*{username}" class="form-control"
                         placeholder="Nombre de usuario" />
+                        <label class="form-label">Nombre de Usuario</label>
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label fw-bolder">Contraseña:</label>
+                    <div class="form-floating mb-3">
                         <input type="password" th:field="*{password}" class="form-control"
                         placeholder="Contraseña" />
+                        <label class="form-label">Contraseña</label>
                     </div>
-                    <div class="mb-2">
-                        <label class="form-label fw-bolder">Repita la contraseña:</label>
-                        <input type="password2"  class="form-control"
+                    <div class="form-floating mb-3">
+                        <input type="password"  class="form-control"
                         placeholder="Repita la contraseña" />
+                        <label class="form-label">Repita la contraseña</label>
                     </div>
                     <div class="mb-3">
                         <button type="submit" class="btn btn-primary btn-lg text-center">Registrar</button>

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface VendedorRepository extends JpaRepository<Vendedor, Long> {
 
-    Optional<Vendedor> findByAppUserUsername(String username);
+    Optional<Vendedor> findByAppUserUsernameIgnoreCase(String username);
 
     @Query("SELECT v FROM Vendedor v JOIN FETCH v.appUser WHERE v.id = :id")
     Optional<Vendedor> findVendedorWithAppUserById(@Param("id") Long id);

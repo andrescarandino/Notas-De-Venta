@@ -50,7 +50,7 @@ public class NotaVentaService {
         notaVenta.setSubtotalUSD(notaVenta.calcularSubTotalUSD());
         notaVenta.setTotalUSD(notaVenta.calcularTotalUSD());
         notaVenta.setTotalIVA(notaVenta.calcularTotalIVA());
-        notaVenta.setTotalARS(notaVenta.calcularTotalARS());
+        //notaVenta.setTotalARS(notaVenta.calcularTotalARS());
         notaVentaRepository.save(notaVenta);
 
     }
@@ -68,7 +68,7 @@ public class NotaVentaService {
     }
 
     public List<NotaVenta> findByVendedorUsername(String username) {
-        Optional<Vendedor> vendedorOpt = vendedorRepository.findByAppUserUsername(username);
+        Optional<Vendedor> vendedorOpt = vendedorRepository.findByAppUserUsernameIgnoreCase(username);
         if (vendedorOpt.isPresent()) {
             return vendedorOpt.get().getNotasVentas(); // Devuelve las notas de venta del vendedor
         }

@@ -104,21 +104,6 @@ public class NotaVenta {
             // Si hay IVA, aplica el IVA al totalUSD basado en el precio de venta
             totalUSD = totalUSD.multiply(BigDecimal.ONE.add(IVA.divide(BigDecimal.valueOf(100))));
         } else {
-            // Si el IVA es 0, aplica el interés sobre el precio costo
-//            BigDecimal totalCostoInteres = BigDecimal.ZERO;
-//
-//            for (DetalleNotaVenta detalle : detalles) {
-//                BigDecimal interes = detalle.getPrecioCosto()
-//                        .multiply(interesMensual)
-//                        .multiply(BigDecimal.valueOf(calcularMeses()))
-//                        .divide(BigDecimal.valueOf(100));
-//                totalCostoInteres = totalCostoInteres.add(interes.multiply(detalle.getCantidad()));
-//                System.out.println("totalCostoIntereses" +totalCostoInteres);
-//            }
-//            totalUSD = totalUSD.add(totalCostoInteres);
-//            System.out.println("total USD" + totalUSD);
-//        }
-
             BigDecimal tasaInteres = BigDecimal.ONE.add(interesMensual.multiply(BigDecimal.valueOf(calcularMeses()))
                     .divide(BigDecimal.valueOf(100)));
             totalUSD = totalUSD.multiply(tasaInteres);

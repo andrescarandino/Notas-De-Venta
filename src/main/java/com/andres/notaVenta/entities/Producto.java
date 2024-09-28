@@ -21,7 +21,7 @@ public class Producto {
     private Long id;
     private String nombre;
 
-    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "producto")
     private List<DetalleNotaVenta> detallesVentas;
 
     public Producto(Long id, String nombre) {

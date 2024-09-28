@@ -53,17 +53,16 @@
             </form>
         </div>
     </nav>
-    <div class="container mt-4">
-        <h2 class="h2 col-12 my-4 text-center fs-1 fw-bold text-dark text-opacity-75 ">Listado de Notas de Venta</h2>
-        <table class="table table-hover table-bordered">
-            <thead class="table table-warning">
+    <div class="container mt-5 d-flex justify-content-center">
+        <table class="table table-hover caption-top w-75">
+            <thead class="table">
+                <caption><strong>Listado de notas de venta</strong></caption>
                 <tr class="text-center text-bordered">
                     <th>Cliente</th>
                     <th>Vendedor</th>
                     <th>Fecha de Creación</th>
                     <th>Vencimiento</th>
                     <th>Total en USD</th>
-                    <th>Total en ARS</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -74,7 +73,6 @@
                     <td th:text="${notaVenta.fechaCreacion}"></td>
                     <td th:text="${notaVenta.vencimiento}"></td>
                     <td th:text="${notaVenta.totalUSD}"></td>
-                    <td th:text="${notaVenta.totalARS}"></td>
 
                     <td class="text-center">
                         <!-- Botón de Eliminar -->

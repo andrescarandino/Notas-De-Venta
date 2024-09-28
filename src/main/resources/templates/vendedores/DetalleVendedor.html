@@ -130,7 +130,7 @@
                             <td>
                                 <h5 class="fw-bold">Datos del Cliente</h5>
                                 <span class="fw-medium"
-                                    th:text="'Cuenta Corriente: ' + ${notaVenta.cliente.cuentaCorriente}"></span><br>
+                                    th:text="'CC: ' + ${notaVenta.cliente.cuentaCorriente}"></span><br>
                                 <!--<span class="fw-medium" th:text="'Email: ' +${notaVenta.cliente.email}"></span><br>-->
                             </td>
 
@@ -152,10 +152,10 @@
                 <td>IVA (%)</td>
                 <td th:text="${notaVenta.IVA} + '%'"></td>
             </tr>
-            <tr class="details">
+            <!--<tr class="details">
                 <td>Tipo de Cambio (USD a ARS)</td>
                 <td th:text="${notaVenta.tipoCambio}"></td>
-            </tr>
+            </tr> -->
             <tr class="details">
                 <td>Interés Mensual (%)</td>
                 <td th:text="${notaVenta.interesMensual} + '%'"></td>
@@ -200,13 +200,13 @@
                             <td class="text-center fw-bolder border-bottom" th:text="${notaVenta.totalUSD}"></td>
                 </td>
             </tr>
-            <tr>
+            <!--<tr>
                 <td class="text-end"></td>
                 <td>
                 <td class="text-end fw-bold">Total ARS:</td>
                 <td class="text-center fw-bolder border-bottom" th:text="${notaVenta.totalARS}"></td>
                 </td>
-            </tr>
+            </tr> -->
             <tr>
                 <td class="text-end"></td>
                 <td>

@@ -20,7 +20,6 @@ public class Cliente {
     private Long id;
 
     private String cuentaCorriente;
-    private String email;
     @ManyToOne
     @JoinColumn(name = "vendedor_id")
     private Vendedor vendedor;
@@ -28,10 +27,10 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente")
     private List<NotaVenta> notasVentas;
 
-    public Cliente(Long id, String cuentaCorriente, String email) {
+    public Cliente(Long id, String cuentaCorriente) {
         this.id = id;
         this.cuentaCorriente = cuentaCorriente;
-        this.email = email;
+
     }
 
     @Override
@@ -39,7 +38,6 @@ public class Cliente {
         return "Cliente{" +
                 "id=" + id +
                 ", cuentaCorriente='" + cuentaCorriente + '\'' +
-                ", email='" + email + '\'' +
                 ", notasVentas=" + notasVentas +
                 "vendedor= " + vendedor.getId() +
                 '}';
