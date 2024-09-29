@@ -25,6 +25,7 @@ public class DetalleNotaVenta {
     @JoinColumn(name = "producto_id")
     private Producto producto;
 
+    private BigDecimal IVA;
     private String nombre;
     private BigDecimal precioCosto;
     private BigDecimal precioVenta;
@@ -33,10 +34,11 @@ public class DetalleNotaVenta {
     private BigDecimal cantidad;
     private BigDecimal ganancia; //%ganancia
 
-    public DetalleNotaVenta(Producto producto, BigDecimal cantidad, BigDecimal ganancia) {
+    public DetalleNotaVenta(Producto producto, BigDecimal cantidad, BigDecimal ganancia, BigDecimal IVA) {
         this.cantidad = cantidad;
         this.producto = producto;
         this.nombre= producto.getNombre();
+        this.IVA= IVA;
     }
 
     public BigDecimal calcularSubtotalCosto() {
@@ -51,6 +53,10 @@ public class DetalleNotaVenta {
 
     public BigDecimal calcularSubtotalVenta() {
         return calcularPrecioVenta().multiply(this.getCantidad());
+    }
+
+    public BigDecimal calcularIVADetalle(){
+         return calcularSubtotalVenta().multiply(IVA).divide(BigDecimal.valueOf(100));
     }
 
     @Override

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class NotaVenta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private BigDecimal IVA;
+    private Boolean conIVA;
     private LocalDate fechaCreacion;
     private LocalDate vencimiento;
     @Enumerated(EnumType.STRING)
@@ -30,6 +31,9 @@ public class NotaVenta {
     @Enumerated(EnumType.STRING)
     private FormaDePago formaDePago;
     private String observaciones;
+    private BigDecimal totalIVAVeintiUno;
+    private BigDecimal totalIVADiezCinco;
+
 
     //Hay que calcular
     private BigDecimal totalUSD;
@@ -53,10 +57,10 @@ public class NotaVenta {
     private Vendedor vendedor;
 
 
-    public NotaVenta(BigDecimal IVA, LocalDate fechaCreacion, LocalDate vencimiento,
+    public NotaVenta( LocalDate fechaCreacion, LocalDate vencimiento,
                      Comprobante comprobante, BigDecimal tipoCambio, BigDecimal interesMensual,
                      FormaDePago formaDePago, String observaciones) {
-        this.IVA = IVA;
+
         this.fechaCreacion = fechaCreacion;
         this.vencimiento = vencimiento;
         this.comprobante = comprobante;
@@ -84,9 +88,22 @@ public class NotaVenta {
         }
     }
 
-    public BigDecimal calcularTotalIVA() {
-        this.totalIVA = totalUSD.multiply(this.IVA.divide(BigDecimal.valueOf(100)));
-        return totalIVA;
+    public BigDecimal calcularIVAVeintiUno() {
+        BigDecimal ivaVentiuno= new BigDecimal(0.0);
+        for (DetalleNotaVenta detalle : this.detalles) {
+            if (detalle.getIVA().compareTo(BigDecimal.valueOf(21)) == 0)
+            ivaVentiuno = ivaVentiuno.add(detalle.calcularIVADetalle());
+        }
+        return ivaVentiuno;
+    }
+
+    public BigDecimal calcularIVADiezCinco() {
+        BigDecimal IVADiezCinco= new BigDecimal(0.0);
+        for (DetalleNotaVenta detalle : this.detalles) {
+            if (detalle.getIVA().compareTo(BigDecimal.valueOf(10.5)) == 0)
+                IVADiezCinco = IVADiezCinco.add(detalle.calcularIVADetalle());
+        }
+        return IVADiezCinco;
     }
 
     public BigDecimal calcularSubTotalUSD() {
@@ -94,16 +111,18 @@ public class NotaVenta {
         for (DetalleNotaVenta detalle : this.detalles) {
             subTotalUSD = subTotalUSD.add(detalle.getSubtotalVenta());
         }
-        System.out.println("subtotal: " + subTotalUSD);
         return subTotalUSD;
     }
 
     public BigDecimal calcularTotalUSD() {
         BigDecimal totalUSD = calcularSubTotalUSD();
 
-        if (IVA.compareTo(BigDecimal.ZERO) > 0) {
+        if (conIVA) {
             // Si hay IVA, aplica el IVA al totalUSD basado en el precio de venta
-            totalUSD = totalUSD.multiply(BigDecimal.ONE.add(IVA.divide(BigDecimal.valueOf(100))));
+            //totalUSD = totalUSD.multiply(BigDecimal.ONE.add(IVA.divide(BigDecimal.valueOf(100))));
+            for (DetalleNotaVenta detalle : this.detalles) {
+                totalUSD = totalUSD.add(detalle.calcularIVADetalle());
+            }
         } else {
             BigDecimal tasaInteres = BigDecimal.ONE.add(interesMensual.multiply(BigDecimal.valueOf(calcularMeses()))
                     .divide(BigDecimal.valueOf(100)));
@@ -122,7 +141,6 @@ public class NotaVenta {
         public String toString () {
             return "NotaVenta{" +
                     "id=" + id +
-                    ", IVA=" + IVA +
                     ", fechaCreacion=" + fechaCreacion +
                     ", vencimiento=" + vencimiento +
                     ", comprobante=" + comprobante +

@@ -30,6 +30,7 @@ public class NotaVentaService {
         Cliente cliente = clienteRepository.findById(notaVenta.getCliente().getId()).orElseThrow();
         Vendedor vendedor = vendedorRepository.findById(notaVenta.getVendedor().getId()).orElseThrow();
 
+
         notaVenta.setFechaCreacion(LocalDate.now());
         notaVenta.setCliente(cliente);
         notaVenta.setVendedor(vendedor);
@@ -43,15 +44,13 @@ public class NotaVentaService {
             detalle.setPrecioVenta(detalle.calcularPrecioVenta());
             detalle.setSubtotalVenta(detalle.calcularSubtotalVenta());
             detalle.setNotaVenta(notaVenta);
-
         }
         notaVenta.setEstado(Estado.EN_ESPERA);
+        notaVenta.setTotalIVAVeintiUno(notaVenta.calcularIVAVeintiUno());
+        notaVenta.setTotalIVADiezCinco(notaVenta.calcularIVADiezCinco());
 
         notaVenta.setSubtotalUSD(notaVenta.calcularSubTotalUSD());
         notaVenta.setTotalUSD(notaVenta.calcularTotalUSD());
-        notaVenta.setTotalIVA(notaVenta.calcularTotalIVA());
-        //notaVenta.setTotalARS(notaVenta.calcularTotalARS());
-        System.out.println(notaVenta.getObservaciones());
         notaVentaRepository.save(notaVenta);
 
     }
