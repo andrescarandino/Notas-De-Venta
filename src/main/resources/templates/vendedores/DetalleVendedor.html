@@ -194,10 +194,10 @@
                 <td colspan="2">
                     <table class="table table-borderless">
                         <tr>
-                            <td class="text-end"></td>
+                            <td class="fw-bold border-top border-end border-start rounded-3">Observaciones: </td>
                             <td>
                             <td class="text-end fw-bold ">Total USD:</td>
-                            <td class="text-center fw-bolder border-bottom" th:text="${notaVenta.totalUSD}"></td>
+                            <td class="text-end fw-bolder border-bottom" th:text="${notaVenta.totalUSD}"></td>
                 </td>
             </tr>
             <!--<tr>
@@ -208,10 +208,12 @@
                 </td>
             </tr> -->
             <tr>
-                <td class="text-end"></td>
+                <td class=" border-bottom border-end border-start" th:text="${notaVenta.observaciones}">
+
+                </td>
                 <td>
                 <td class="text-end fw-bold">Total IVA:</td>
-                <td class="text-center fw-bolder border-bottom" th:text="${notaVenta.totalIVA}"></td>
+                <td class="text-end fw-bolder border-bottom" th:text="${notaVenta.totalIVA}"></td>
                 </td>
             </tr>
         </table>

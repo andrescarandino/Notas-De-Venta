@@ -193,7 +193,7 @@
 
 
                 <!-- Fecha de vencimiento -->
-                <div class="form-floating col-md-3 col-xl-3 mb-2">
+                <div class="form-floating col-md-3 col-xl-3 mb-5">
                     
                     <input type="date" class="form-control" id="vencimiento" th:field="*{vencimiento}"
                         th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
@@ -202,15 +202,23 @@
                         Es necesaria una fecha de vencimiento
                     </div>
                 </div>
-            
 
             <!-- Buscador de productos -->
-            <div class="form-floating col-md-4 col-xl-4 mb-3">
+            <div class="form-floating col-md-4 col-xl-4 mb-5">
                 <input type="text" id="buscarProducto" class="form-control" placeholder="Escribe para buscar...">
                 <label for="buscarProducto" class="form-label ms-2">Escribe para buscar Producto</label>
                 <div id="resultadosBusqueda" class="list-group mt-2 text-start"></div>
             </div>
+            <!-- observaciones -->
+            <div class="form-floating col-md-3 col-xl-3 mb-5">
+                <textarea class="form-control" placeholder="Ingrese las observaciones aqui" id="observaciones" style="height: 100px" th:field="*{observaciones}"></textarea>
+                <label for="observaciones" class="ms-2">Observaciones</label>
+            </div>
+
         </div>
+
+
+
             <!-- Tabla de productos seleccionados -->
             <div class="d-flex justify-content-center">
 

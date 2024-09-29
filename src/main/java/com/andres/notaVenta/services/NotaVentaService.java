@@ -51,6 +51,7 @@ public class NotaVentaService {
         notaVenta.setTotalUSD(notaVenta.calcularTotalUSD());
         notaVenta.setTotalIVA(notaVenta.calcularTotalIVA());
         //notaVenta.setTotalARS(notaVenta.calcularTotalARS());
+        System.out.println(notaVenta.getObservaciones());
         notaVentaRepository.save(notaVenta);
 
     }
