@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,9 @@ public class NotaVentaService {
         for (DetalleNotaVenta detalle : notaVenta.getDetalles()){
             Producto producto = productoRepository.findById(detalle.getProducto().getId()).orElseThrow();
             detalle.setProducto(producto);
+            if(!notaVenta.getConIVA()){
+                detalle.setIVA(BigDecimal.ZERO);
+            }
             detalle.setNombre(producto.getNombre());
             detalle.setPrecioCosto(detalle.getPrecioCosto());
             detalle.setSubtotalCosto(detalle.calcularSubtotalCosto());
@@ -46,8 +50,15 @@ public class NotaVentaService {
             detalle.setNotaVenta(notaVenta);
         }
         notaVenta.setEstado(Estado.EN_ESPERA);
-        notaVenta.setTotalIVAVeintiUno(notaVenta.calcularIVAVeintiUno());
-        notaVenta.setTotalIVADiezCinco(notaVenta.calcularIVADiezCinco());
+        if(notaVenta.getConIVA()){
+            notaVenta.setTotalIVAVeintiUno(notaVenta.calcularIVAVeintiUno());
+            notaVenta.setTotalIVADiezCinco(notaVenta.calcularIVADiezCinco());
+        }else {
+            notaVenta.setTotalIVAVeintiUno(BigDecimal.ZERO);
+            notaVenta.setTotalIVADiezCinco(BigDecimal.ZERO);
+        }
+
+
 
         notaVenta.setSubtotalUSD(notaVenta.calcularSubTotalUSD());
         notaVenta.setTotalUSD(notaVenta.calcularTotalUSD());
