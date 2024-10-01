@@ -3,11 +3,14 @@ package com.andres.notaVenta.controller.admin;
 import com.andres.notaVenta.Dtos.VendedorForm;
 import com.andres.notaVenta.entities.Vendedor;
 import com.andres.notaVenta.services.VendedorService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -28,7 +31,13 @@ public class VendedorAdminController {
     }
 
     @PostMapping("/guardar")
-    public String registrarVendedor(@ModelAttribute("vendedorForm") VendedorForm vendedorForm) {
+    public String registrarVendedor(@Valid @ModelAttribute("vendedorForm") VendedorForm vendedorForm, RedirectAttributes redirectAttributes, BindingResult result) {
+        if(!vendedorForm.passwordConfirm()){
+            result.rejectValue("verifyPassword", "error.verifyPassword", "Las contraseñas no coinciden");
+        }
+        if (result.hasErrors()){
+            return "/admin/vendedorForm";
+        }
         vendedorService.registrarVendedor(vendedorForm, passwordEncoder);
         return "redirect:/admin/vendedores";
     }

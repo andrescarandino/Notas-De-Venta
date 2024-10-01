@@ -69,9 +69,10 @@
                         <label class="form-label">Contraseña</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password"  class="form-control"
+                        <input type="password" th:field="*{verifyPassword}" class="form-control"
                         placeholder="Repita la contraseña" />
                         <label class="form-label">Repita la contraseña</label>
+                        <div th:if="${#fields.hasErrors('verifyPassword')}" th:errors="*{verifyPassword}"></div>
                     </div>
                     <div class="mb-3">
                         <button type="submit" class="btn btn-primary btn-lg text-center">Registrar</button>
