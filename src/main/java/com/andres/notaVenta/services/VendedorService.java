@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VendedorService {
@@ -54,7 +55,9 @@ public class VendedorService {
         Vendedor vendedor = new Vendedor();
         vendedor.setNombre(vendedorForm.getNombre());
         vendedor.setAppUser(appUser);
+        vendedor.setSucursal(vendedorForm.getSucursal());
         vendedorRepository.save(vendedor);
+
         System.out.println(vendedor);
     }
 
@@ -65,9 +68,11 @@ public class VendedorService {
     }
 
 
-    public String buscarUsernameVendedor(String username) {
-        String usernameBD = "";
-        usernameBD = vendedorRepository.findByAppUserUsernameIgnoreCase(username).orElseThrow().getNombre();
-        return usernameBD;
+    public boolean isExistVendedorUsername(String username){
+        Optional<Vendedor> vendedor = vendedorRepository.findByAppUserUsernameIgnoreCase(username);
+        if (vendedor.isPresent()){
+            return true;
+    }
+        return false;
     }
 }

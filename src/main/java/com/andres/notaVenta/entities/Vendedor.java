@@ -21,7 +21,8 @@ public class Vendedor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Enumerated(EnumType.STRING)
+    private Sucursal sucursal;
     private String nombre;
 
     @OneToOne
@@ -34,9 +35,10 @@ public class Vendedor {
     @OneToMany(mappedBy = "vendedor")
     private List<Cliente> clientes;
 
-    public Vendedor(Long id, String nombre) {
+    public Vendedor(Long id, String nombre, Sucursal sucursal) {
         this.id = id;
         this.nombre = nombre;
+        this.sucursal= sucursal;
     }
 
     @Override

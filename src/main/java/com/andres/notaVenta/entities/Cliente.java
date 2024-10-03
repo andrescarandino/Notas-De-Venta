@@ -30,7 +30,6 @@ public class Cliente {
     public Cliente(Long id, String cuentaCorriente) {
         this.id = id;
         this.cuentaCorriente = cuentaCorriente;
-
     }
 
     @Override
