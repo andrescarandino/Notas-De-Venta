@@ -65,4 +65,9 @@ public class VendedorService {
     }
 
 
+    public String buscarUsernameVendedor(String username) {
+        String usernameBD = "";
+        usernameBD = vendedorRepository.findByAppUserUsernameIgnoreCase(username).orElseThrow().getNombre();
+        return usernameBD;
+    }
 }

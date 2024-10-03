@@ -35,9 +35,14 @@ public class VendedorAdminController {
         if(!vendedorForm.passwordConfirm()){
             result.rejectValue("verifyPassword", "error.verifyPassword", "Las contraseñas no coinciden");
         }
+        String username = vendedorService.buscarUsernameVendedor(vendedorForm.getUsername());
+        if (!username.isBlank()){
+            result.rejectValue("username", "error.username", "El nombre de usuario ya existe");
+        }
         if (result.hasErrors()){
             return "/admin/vendedorForm";
         }
+
         vendedorService.registrarVendedor(vendedorForm, passwordEncoder);
         return "redirect:/admin/vendedores";
     }
