@@ -1,7 +1,11 @@
 package com.andres.notaVenta;
 
+import com.andres.notaVenta.entities.Sucursal;
+import com.andres.notaVenta.entities.Vendedor;
 import com.andres.notaVenta.repositories.RoleRepository;
 import com.andres.notaVenta.repositories.AppUserRepository;
+
+import com.andres.notaVenta.repositories.VendedorRepository;
 import com.andres.notaVenta.security.AppUser;
 import com.andres.notaVenta.security.Role;
 import org.springframework.boot.CommandLineRunner;
@@ -25,10 +29,9 @@ public class NotaVentaApplication {
 	public class DataInitializer {
 
 		@Bean
-		public CommandLineRunner initData(AppUserRepository appUserRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+		public CommandLineRunner initData(AppUserRepository appUserRepository, RoleRepository roleRepository, VendedorRepository vendedorRepository, BCryptPasswordEncoder passwordEncoder) {
 			return args -> {
-				// Crear roles si no existen
-				// Crear roles si no existen
+
 				Role adminRole = roleRepository.findByName("ROLE_ADMIN");
 				if (adminRole == null) {
 					adminRole = new Role("ROLE_ADMIN");
@@ -46,20 +49,29 @@ public class NotaVentaApplication {
 					AppUser admin = new AppUser();
 					admin.setUsername("admin");
 					admin.setPassword(passwordEncoder.encode("admin123"));
-					admin.setEnabled(true);
+					admin.setEnabled(false);
 					admin.setRoles(Set.of(adminRole));
 					appUserRepository.save(admin);
 				}
 
 				// Crear usuario Vendedor con contraseña cifrada
-				if (appUserRepository.findByUsername("prueba2") == null) {
+				if (appUserRepository.findByUsername("vendedor") == null) {
 					AppUser vendedor = new AppUser();
-					vendedor.setUsername("prueba2");
-					vendedor.setPassword(passwordEncoder.encode("prueba123"));
+					vendedor.setUsername("vendedor");
+					vendedor.setPassword(passwordEncoder.encode("vendedor123"));
 					vendedor.setEnabled(false);
 					vendedor.setRoles(Set.of(vendedorRole));
 					appUserRepository.save(vendedor);
+					Vendedor vendedor1 = new Vendedor();
+					vendedor1.setSucursal(Sucursal.MATORRALES);
+					vendedor1.setNombre("vendedorPrueba");
+					vendedor1.setAppUser(vendedor);
+					vendedorRepository.save(vendedor1);
 				}
+
+
+
+
 
 			};
 		}

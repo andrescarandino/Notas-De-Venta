@@ -25,6 +25,10 @@ public class Vendedor {
     private Sucursal sucursal;
     private String nombre;
 
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
+    }
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private AppUser appUser;

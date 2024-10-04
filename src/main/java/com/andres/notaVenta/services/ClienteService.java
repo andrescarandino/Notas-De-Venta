@@ -29,9 +29,8 @@ public class ClienteService {
     }
 
     public void guardar(Cliente cliente, String username) {
-        //Error cuando tengo mayusculas
         Optional<Vendedor> vendedor = vendedorRepository.findByAppUserUsernameIgnoreCase(username);
-        System.out.println(vendedor.get());
+
         if (vendedor.isPresent()){
             cliente.setVendedor(vendedor.get());
         }

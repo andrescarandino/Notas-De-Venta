@@ -17,4 +17,5 @@ public interface VendedorRepository extends JpaRepository<Vendedor, Long> {
 
     @Query("SELECT v FROM Vendedor v JOIN FETCH v.appUser")
     List<Vendedor> findAllVendedoresWithAppUser();
+
 }

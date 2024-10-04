@@ -152,6 +152,7 @@ public class NotaVenta {
                     ", totalARS=" + totalARS +
                     ", estado=" + estado +
                     ", cliente=" + cliente.getId() +
+                    ", vendedor=" +vendedor.getId() +
                     '}';
         }
     }

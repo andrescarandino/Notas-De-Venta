@@ -46,9 +46,13 @@ public class DetalleNotaVenta {
     }
 
     public BigDecimal calcularPrecioVenta() {
+        if(this.ganancia == null ){
+            this.ganancia = BigDecimal.ZERO;
+            return calcularSubtotalCosto();
+        }
         return this.getPrecioCosto().multiply(
-                BigDecimal.ONE.add(ganancia.divide(BigDecimal.valueOf(100)))
-        );
+                BigDecimal.ONE.add(ganancia.divide(BigDecimal.valueOf(100))));
+
     }
 
     public BigDecimal calcularSubtotalVenta() {
