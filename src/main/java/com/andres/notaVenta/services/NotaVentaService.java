@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +35,7 @@ public class NotaVentaService {
         Vendedor vendedor = vendedorRepository.findById(notaVenta.getVendedor().getId()).orElseThrow();
 
 
-        notaVenta.setFechaCreacion(LocalDate.now());
+        notaVenta.setFechaCreacion(LocalDateTime.now());
         notaVenta.setCliente(cliente);
         notaVenta.setVendedor(vendedor);
 

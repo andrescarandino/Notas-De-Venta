@@ -86,8 +86,8 @@
             <tbody class="text-center">
                 <tr th:each="notaVenta : ${notasVenta}" class="table-row" th:data-id="${notaVenta.id}">
                     <td th:text="${notaVenta.cliente.cuentaCorriente}"></td>
-                    <td th:text="${notaVenta.fechaCreacion}"></td>
-                    <td th:text="${notaVenta.vencimiento}"></td>
+                    <td th:text="${#temporals.format(notaVenta.fechaCreacion, 'dd-MMM-yyyy' )}"></td>
+                    <td th:text="${#temporals.format(notaVenta.vencimiento, 'dd-MMM-yyyy' )}"></td>
                     <td th:text="${notaVenta.totalUSD}"></td>
                     <!-- <td th:text="${notaVenta.totalARS}"></td> -->
 

@@ -109,8 +109,8 @@
                             <td>
                                 <h2 class="fw-bold">Nota de Venta</h2>
 
-                                <span class="fw-semibold" th:text="'Fecha: '+${notaVenta.fechaCreacion}"></span><br>
-                                <span class="fw-semibold" th:text="'Vencimiento: ' + ${notaVenta.vencimiento}"></span>
+                                <span class="fw-semibold" th:text="'Fecha: '+${#temporals.format(notaVenta.fechaCreacion, 'dd-MMM-yyyy' )}"></span><br>
+                                <span class="fw-semibold" th:text="'Vencimiento: ' + ${#temporals.format(notaVenta.vencimiento, 'dd-MMM-yyyy' )}"></span>
                             </td>
 
                             <td>

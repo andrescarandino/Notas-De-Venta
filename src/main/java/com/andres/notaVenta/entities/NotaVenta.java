@@ -7,6 +7,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class NotaVenta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Boolean conIVA;
-    private LocalDate fechaCreacion;
+    private LocalDateTime fechaCreacion;
     private LocalDate vencimiento;
     @Enumerated(EnumType.STRING)
     private Comprobante comprobante;
@@ -57,7 +58,7 @@ public class NotaVenta {
     private Vendedor vendedor;
 
 
-    public NotaVenta( LocalDate fechaCreacion, LocalDate vencimiento,
+    public NotaVenta( LocalDateTime fechaCreacion, LocalDate vencimiento,
                      Comprobante comprobante, BigDecimal tipoCambio, BigDecimal interesMensual,
                      FormaDePago formaDePago, String observaciones) {
 
@@ -71,7 +72,7 @@ public class NotaVenta {
     }
 
     public long calcularMeses() {
-        LocalDate fechaInicio = this.fechaCreacion.withDayOfMonth(1); // Ajustar al primer día del mes
+        LocalDate fechaInicio = this.fechaCreacion.toLocalDate().withDayOfMonth(1);//this.fechaCreacion.withDayOfMonth(1); // Ajustar al primer día del mes
         LocalDate fechaFin = this.vencimiento.withDayOfMonth(1); // Ajustar al primer día del mes
 
         return ChronoUnit.MONTHS.between(fechaInicio, fechaFin);

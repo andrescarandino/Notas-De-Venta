@@ -40,7 +40,7 @@
                             Vendedores
                         </a>
                         <ul class="dropdown-menu bg-dark-subtle  ">
-                            <li><a class="dropdown-item fs-6 fw-bold text-dark" href="/admin/vendedores/crear">Crear</a></li>
+                            <li><a class="dropdown-item fs-6 fw-bold text-dark" href="/admin/vendedores/crear">Nuevo</a></li>
                             <li><a class="dropdown-item fs-6 fw-bold text-dark" href="/admin/vendedores">Listar</a></li>
                         </ul>
                     </li>
@@ -72,8 +72,8 @@
                     <td th:text="${notaVenta.id}"></td>
                     <td th:text="${notaVenta.cliente.cuentaCorriente}"></td>
                     <td th:text="${notaVenta.vendedor.nombre}"></td>
-                    <td th:text="${notaVenta.fechaCreacion}"></td>
-                    <td th:text="${notaVenta.vencimiento}"></td>
+                    <td th:text="${#temporals.format(notaVenta.fechaCreacion, 'dd-MMM-yyyy' )}"></td>
+                    <td th:text="${#temporals.format(notaVenta.vencimiento, 'dd-MMM-yyyy' )}"></td>
                     <td th:text="${notaVenta.totalUSD}"></td>
             
                     <td class="text-center">
