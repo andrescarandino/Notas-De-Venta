@@ -58,6 +58,7 @@
             <thead class="table">
                 <caption><strong>Listado de notas de venta</strong></caption>
                 <tr class="text-center text-bordered">
+                    <th>id</th>
                     <th>Cliente</th>
                     <th>Vendedor</th>
                     <th>Fecha de Creación</th>
@@ -67,15 +68,15 @@
                 </tr>
             </thead>
             <tbody class="text-center">
-                <tr th:each="notaVenta : ${notasVenta}" class="table-row" th:data-id="${notaVenta.id}">
+                <tr th:each="notaVenta : ${notasVentaPage.content}" class="table-row" th:data-id="${notaVenta.id}">
+                    <td th:text="${notaVenta.id}"></td>
                     <td th:text="${notaVenta.cliente.cuentaCorriente}"></td>
                     <td th:text="${notaVenta.vendedor.nombre}"></td>
                     <td th:text="${notaVenta.fechaCreacion}"></td>
                     <td th:text="${notaVenta.vencimiento}"></td>
                     <td th:text="${notaVenta.totalUSD}"></td>
-
+            
                     <td class="text-center">
-                        <!-- Botón de Eliminar -->
                         <form th:action="@{/admin/notasVentas/eliminar/{id}(id=${notaVenta.id})}" method="post"
                             style="display:inline-block">
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
@@ -84,6 +85,20 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${notasVentaPage.hasPrevious()} ? '' : 'disabled'">
+                <a class="page-link" th:href="@{|/admin/notasVentas?page=${notasVentaPage.number - 1}&size=${notasVentaPage.size}|}">Anterior</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, notasVentaPage.totalPages - 1)}"
+                th:classappend="${i == notasVentaPage.number} ? 'active'">
+                <a class="page-link" th:href="@{|/admin/notasVentas?page=${i}&size=${notasVentaPage.size}|}" th:text="${i + 1}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${notasVentaPage.hasNext()} ? '' : 'disabled'">
+                <a class="page-link" th:href="@{|/admin/notasVentas?page=${notasVentaPage.number + 1}&size=${notasVentaPage.size}|}">Siguiente</a>
+            </li>
+        </ul>
     </div>
 
     <!-- Librerías JavaScript -->

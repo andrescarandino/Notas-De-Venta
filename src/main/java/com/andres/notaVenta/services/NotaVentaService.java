@@ -3,6 +3,8 @@ package com.andres.notaVenta.services;
 import com.andres.notaVenta.entities.*;
 import com.andres.notaVenta.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,8 +72,8 @@ public class NotaVentaService {
         return notaVentaRepository.findById(id).orElseThrow();
     }
 
-    public List<NotaVenta> listar() {
-        return notaVentaRepository.findAll();
+    public Page<NotaVenta> listar(Pageable pageable) {
+        return notaVentaRepository.findAll(pageable);
     }
 
     public void eliminarPorId(Long id) {

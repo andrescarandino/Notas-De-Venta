@@ -3,12 +3,13 @@ package com.andres.notaVenta.controller.admin;
 import com.andres.notaVenta.entities.NotaVenta;
 import com.andres.notaVenta.services.NotaVentaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,10 +21,15 @@ public class NotaVentaAdminController {
     NotaVentaService notaVentaService;
 
     @GetMapping
-    public String listarNotasVentas(Model model) {
-        List<NotaVenta> notasVenta = notaVentaService.listar();
-        System.out.println(notasVenta);
-        model.addAttribute("notasVenta", notasVenta);
+    public String listar(
+            Model model,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("fechaCreacion").descending());
+        Page<NotaVenta> notasVentaPage = notaVentaService.listar(pageable);
+
+        model.addAttribute("notasVentaPage", notasVentaPage);
         return "admin/listaNotasVentas";
     }
 
