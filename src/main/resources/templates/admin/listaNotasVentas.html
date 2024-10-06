@@ -58,7 +58,6 @@
             <thead class="table">
                 <caption><strong>Listado de notas de venta</strong></caption>
                 <tr class="text-center text-bordered">
-                    <th>id</th>
                     <th>Cliente</th>
                     <th>Vendedor</th>
                     <th>Fecha de Creación</th>
@@ -69,7 +68,6 @@
             </thead>
             <tbody class="text-center">
                 <tr th:each="notaVenta : ${notasVentaPage.content}" class="table-row" th:data-id="${notaVenta.id}">
-                    <td th:text="${notaVenta.id}"></td>
                     <td th:text="${notaVenta.cliente.cuentaCorriente}"></td>
                     <td th:text="${notaVenta.vendedor.nombre}"></td>
                     <td th:text="${#temporals.format(notaVenta.fechaCreacion, 'dd-MMM-yyyy' )}"></td>
