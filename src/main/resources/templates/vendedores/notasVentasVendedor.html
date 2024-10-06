@@ -102,6 +102,20 @@
             </tbody>
         </table>
     </div>
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            <li class="page-item" th:classappend="${notasVenta.hasPrevious()} ? '' : 'disabled'">
+                <a class="page-link" th:href="@{|/vendedor/notasVentas?page=${notasVenta.number - 1}&size=${notasVenta.size}|}">Anterior</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, notasVenta.totalPages - 1)}"
+                th:classappend="${i == notasVenta.number} ? 'active'">
+                <a class="page-link" th:href="@{|/vendedor/notasVentas?page=${i}&size=${notasVenta.size}|}" th:text="${i + 1}">1</a>
+            </li>
+            <li class="page-item" th:classappend="${notasVenta.hasNext()} ? '' : 'disabled'">
+                <a class="page-link" th:href="@{|/vendedor/notasVentas?page=${notasVenta.number + 1}&size=${notasVenta.size}|}">Siguiente</a>
+            </li>
+        </ul>
+    </div>
 
     <!-- Librerías JavaScript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

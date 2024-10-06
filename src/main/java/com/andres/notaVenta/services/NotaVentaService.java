@@ -5,6 +5,7 @@ import com.andres.notaVenta.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,8 +13,10 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 public class NotaVentaService {
@@ -81,11 +84,13 @@ public class NotaVentaService {
         notaVentaRepository.deleteById(id);
     }
 
-    public List<NotaVenta> findByVendedorUsername(String username) {
-        Optional<Vendedor> vendedorOpt = vendedorRepository.findByAppUserUsernameIgnoreCase(username);
-        if (vendedorOpt.isPresent()) {
-            return vendedorOpt.get().getNotasVentas(); // Devuelve las notas de venta del vendedor
+    public Page<NotaVenta> listaNotasVentasPorVendedor(String username, Pageable pageable) {
+        Optional<Vendedor> vendedor = vendedorRepository.findByAppUserUsernameIgnoreCase(username);
+        Page<NotaVenta> notasVentas = null;
+        if (vendedor.isPresent()){
+            notasVentas = notaVentaRepository.findByVendedorNombre(vendedor.get().getNombre(), pageable);
         }
-        return new ArrayList<>(); // En caso de no encontrar vendedor, retorna una lista vacía
+
+        return notasVentas;
     }
 }

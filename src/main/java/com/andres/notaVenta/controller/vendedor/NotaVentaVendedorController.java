@@ -8,6 +8,10 @@ import com.andres.notaVenta.services.ClienteService;
 import com.andres.notaVenta.services.NotaVentaService;
 import com.andres.notaVenta.services.VendedorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,9 +32,13 @@ public class NotaVentaVendedorController {
     ClienteService clienteService;
 
     @GetMapping
-    public String listar(Model model, Authentication auth) {
+    public String listar(Model model, Authentication auth,
+                         @RequestParam (defaultValue = "0") int page,
+                         @RequestParam (defaultValue = "10") int size) {
         String username = auth.getName();
-        List<NotaVenta> notasVenta = notaVentaService.findByVendedorUsername(username);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("fechaCreacion").descending());
+        Page<NotaVenta> notasVenta = notaVentaService.listaNotasVentasPorVendedor(username, pageable);
+        System.out.println(notasVenta);
         model.addAttribute("notasVenta", notasVenta);
         return "vendedores/notasVentasVendedor";
     }
