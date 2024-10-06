@@ -25,7 +25,9 @@ public class SecurityConfig{
                 )
                 .authorizeHttpRequests( auth -> auth
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/vendedor/**", "/productos/**").hasRole("VENDEDOR")
+                        .requestMatchers("/vendedor/**").hasRole("VENDEDOR")
+                        .requestMatchers("/vendedor/productos/crear").hasRole("VENDEDOR")
+                        .requestMatchers("/vendedor/productos/buscar").hasRole("VENDEDOR")
                         .anyRequest().authenticated()
 
                 ).formLogin(form -> form

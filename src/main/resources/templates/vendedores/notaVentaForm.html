@@ -63,7 +63,7 @@
             <div class="collapse navbar-collapse justify-content-center me-5 pe-5" id="navbarNavDropdown">
                 <ul class="nav nav-pills nav-fill">
                     <li class="nav-item">
-                        <a class="nav-link fs-5 fw-bold text-dark" href="/productos/create">Productos</a>
+                        <a class="nav-link fs-5 fw-bold text-dark" href="/vendedor/productos/crear">Productos</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle fs-5 fw-bold text-dark" href="#" role="button"
@@ -262,7 +262,7 @@
             let query = $(this).val();
             if (query.length > 0) {
                 $.ajax({
-                    url: '/productos/buscar', // Ruta donde procesarás la búsqueda de productos
+                    url: '/vendedor/productos/buscar', // Ruta donde procesarás la búsqueda de productos
                     method: 'GET',
                     data: { nombre: query },
                     success: function (data) {

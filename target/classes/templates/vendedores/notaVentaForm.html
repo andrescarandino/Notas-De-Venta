@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Registrar Nota de Venta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Ajuste personalizado para limitar el ancho y centrar el contenido */
+        .custom-container {
+            max-width: 90%;
+            /* Ocupa el 80% del ancho de la pantalla grande */
+            margin: 0 auto;
+            /* Centrar el contenedor horizontalmente */
+        }
+
+        img {
+            width: 35px;
+            height: 21px;
+        }
+
+        @media (max-width: 768px) {
+            .custom-container {
+                max-width: 100%;
+            }
+
+            table {
+                width: 100%;
+            }
+
+            .center-input {
+                width: 100%;
+                margin: 0;
+                min-width: 70px;
+            }
+        }
+
+        body {
+            background-color: whitesmoke;
+        }
+
+        .center-input {
+            display: block;
+            /* Para asegurarse que tome la alineación dentro de la celda */
+            margin: auto;
+            /* Centrará el input dentro de la celda */
+            width: 50%;
+            /* Puedes ajustar el ancho según prefieras */
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-dark bg-opacity-25 text-lg-center w-100">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/vendedor/notasVentas"><img src="/images/logo.png"
+                    alt="Logo"><Strong>NotasVentas</Strong></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center me-5 pe-5" id="navbarNavDropdown">
+                <ul class="nav nav-pills nav-fill">
+                    <li class="nav-item">
+                        <a class="nav-link fs-5 fw-bold text-dark" href="/vendedor/productos/crear">Productos</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fs-5 fw-bold text-dark" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Clientes
+                        </a>
+                        <ul class="dropdown-menu bg-dark-subtle">
+                            <li><a class="dropdown-item fs-6 fw-bold text-dark"
+                                    href="/vendedor/clientes/crear">Nuevo</a></li>
+
+                            <li><a class="dropdown-item fs-6 fw-bold text-dark" href="/vendedor/clientes">Listar</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fs-5 fw-bold text-dark" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Notas de Venta
+                        </a>
+                        <ul class="dropdown-menu bg-dark-subtle">
+                            <li><a class="dropdown-item fs-6 fw-bold text-dark"
+                                    href="/vendedor/notasVentas/crear">Nuevo</a></li>
+
+                            <li><a class="dropdown-item fs-6 fw-bold text-dark" href="/vendedor/notasVentas">Listar</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- Botón de salir alineado a la derecha -->
+            <form class="d-flex ms-auto me-3" sec:authorize="isAuthenticated()" method="post" action="/logout">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" class="btn btn-danger fw-semibold text-light">Salir</button>
+            </form>
+        </div>
+    </nav>
+
+
+
+    <div class="container custom-container my-4 text-dark text-opacity-75"> <!-- Añadimos la clase personalizada -->
+        <div class="row mb-5">
+
+            <!--<img th:src="@{/images/LogoAgromatorrales.png}" alt="Descripción de la imagen" class="col-2 my-4 logo">-->
+            <h3 class="h2 col-12 my-4 text-center fs-2 fw-bold text-dark text-opacity-75  ">Registrar Nota de Venta
+            </h3>
+            <!-- Centramos el título -->
+        </div>
+        <form th:action="@{/vendedor/notasVentas/guardar}" th:object="${notaVenta}" method="post"
+            class="needs-validation" novalidate>
+            <div class="row mb-2 d-flex justify-content-around text-center">
+                <!-- Comprobante-->
+                <div class="form-floating col-12 col-md-3 col-xl-2 mb-5">
+
+                    <select class="form-select" id="comprobante" th:field="*{comprobante}" minlength="1" required>
+                        <option value=""></option>
+                        <option value="FACTURA">Factura</option>
+                        <option value="NOTADEBITO">Nota de Débito</option>
+                        <option value="NOTACREDITO">Nota de Crédito</option>
+                        <option value="DEBITOINTERNO">Débito Interno</option>
+                    </select>
+                    <label for="comprobante" class="form-label ms-2 mb-1">Comprobante</label>
+                    <div class="invalid-feedback">
+                        Es necesario un comprobante
+                    </div>
+                </div>
+
+                <!-- Forma de pago -->
+                <div class="form-floating col-12 col-md-3 col-xl-2 mb-5 ">
+                    <select class="form-select" id="formaDePago" th:field="*{formaDePago}" minlength="1" required>
+                        <option value=""></option>
+                        <option value="EFECTIVO">Efectivo</option>
+                        <option value="CHEQUE">Cheque</option>
+                        <option value="CANJECEREAL">Canje de cereal</option>
+                        <option value="TARJETACREDITO">Tarjeta de crédito</option>
+                    </select>
+                    <label for="formaDePago" class="form-label ms-2">Forma de Pago</label>
+                    <div class="invalid-feedback">
+                        Es necesario un tipo de cambio
+                    </div>
+                </div>
+
+                <!-- IVA -->
+                <div class=" form-floating col-md-3 col-xl-2 mb-5">
+                    <select class="form-select" id="coniva" th:field="*{conIVA}" minlength="1" required>
+                        <option value=""></option>
+                        <option value="true">Con IVA</option>
+                        <option value="false">Sin IVA</option>
+                    </select>
+                    <label for="coniva" class="form-label ms-2">IVA</label>
+                    <div class="invalid-feedback">
+                        Es necesario un IVA
+                    </div>
+                </div>
+
+
+                <!-- Interés Mensual -->
+                <div class="form-floating col-12 col-md-3 col-xl-2 mb-5">
+
+                    <input type="number" step="0.01" class="form-control" id="interesMensual"
+                        th:field="*{interesMensual}" required>
+                    <label for="interesMensual" class="form-label ms-2">Porcentaje Interés</label>
+                    <div class="invalid-feedback">
+                        Es necesario un interés mensual
+                    </div>
+                </div>
+
+                <!-- Tipo de cambio 
+                <div class="col-12 col-md-3 col-xl-2 mb-2 text-center fs-5">
+                    <label for="tipoCambio" class="form-label fw-bolder">Tipo Cambio</label>
+                    <input type="number" step="0.01" class="form-control" id="tipoCambio" th:field="*{tipoCambio}"
+                        required>
+                    <div class="invalid-feedback">
+                        Es necesario un tipo de cambio
+                    </div>
+                </div>-->
+
+                <!-- Selección de Cliente -->
+                <div class="form-floating col-md-3 col-xl-2 mb-5">
+
+                    <select class="form-select" id="cliente" th:field="*{cliente.id}" minlength="1" required>
+                        <option value=""></option>
+                        <option th:each="cliente : ${clientes}" th:value="${cliente.id}"
+                            th:text="${cliente.cuentaCorriente}">
+                        </option>
+                    </select>
+                    <label for="cliente" class="form-label ms-2">Cliente</label>
+                </div>
+
+
+
+                <!-- Fecha de vencimiento -->
+                <div class="form-floating col-md-3 col-xl-3 mb-5">
+
+                    <input type="date" class="form-control" id="vencimiento" th:field="*{vencimiento}"
+                        th:min="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" required>
+                    <label for="vencimiento" class="form-label ms-2">Vencimiento</label>
+                    <div class="invalid-feedback">
+                        Es necesaria una fecha de vencimiento
+                    </div>
+                </div>
+
+                <!-- Buscador de productos -->
+                <div class="form-floating col-md-4 col-xl-4 mb-5">
+                    <input type="text" id="buscarProducto" class="form-control" placeholder="Escribe para buscar...">
+                    <label for="buscarProducto" class="form-label ms-2">Escribe para buscar Producto</label>
+                    <div id="resultadosBusqueda" class="list-group mt-2 text-start"></div>
+                </div>
+                <!-- observaciones -->
+                <div class="form-floating col-md-3 col-xl-3 mb-5">
+                    <textarea class="form-control" placeholder="Ingrese las observaciones aqui" id="observaciones"
+                        style="height: 100px" th:field="*{observaciones}"></textarea>
+                    <label for="observaciones" class="ms-2">Observaciones</label>
+                </div>
+
+            </div>
+
+
+
+            <!-- Tabla de productos seleccionados -->
+            <div class="d-flex justify-content-center">
+
+                <label for="productos" class="form-label fw-bolder fs-4 mx-auto mt-4 mb-4">Productos
+                    seleccionados</label>
+            </div>
+            <table class="table table-resposive table-striped mx-auto text-center " id="tablaProductos">
+                <thead>
+                    <tr class="text-center">
+                        <th>Producto</th>
+                        <th>Precio Costo</th>
+                        <th>Cantidad L/KG</th>
+                        <th>Ganancia %</th>
+                        <th id="thIva">IVA</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="productosSeleccionados">
+                    <!-- Aquí se añadirán los productos seleccionados dinámicamente -->
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-center">
+                <button type="submit" class="btn btn-primary btn-lg  mx-auto">Guardar</button>
+            </div>
+
+
+        </form>
+    </div>
+
+    <!-- Librerías JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+
+        // Buscar productos dinámicamente
+        $('#buscarProducto').on('input', function () {
+            let query = $(this).val();
+            if (query.length > 0) {
+                $.ajax({
+                    url: '/vendedor/productos/buscar', // Ruta donde procesarás la búsqueda de productos
+                    method: 'GET',
+                    data: { nombre: query },
+                    success: function (data) {
+                        let resultados = '';
+
+                        if (data.length === 0) {
+                            // Mostrar mensaje cuando no hay resultados
+                            resultados = '<p class="text-muted">No se encontraron productos.</p>';
+                        } else {
+                            // Mostrar resultados si los hay
+                            data.forEach(function (producto) {
+                                resultados += `<a href="#" class="list-group-item list-group-item-action" 
+                            data-id="${producto.id}" 
+                            data-nombre="${producto.nombre}">
+                            ${producto.nombre}
+                        </a>`;
+                            });
+                        }
+                        $('#resultadosBusqueda').html(resultados);
+                    }
+                });
+            } else {
+                $('#resultadosBusqueda').html('');
+            }
+        });
+
+        let productoIndex = 0;
+        // Añadir producto a la tabla de productos seleccionados
+        $('#resultadosBusqueda').on('click', 'a', function (e) {
+            e.preventDefault();
+
+            let idProducto = $(this).data('id');
+            let nombreProducto = $(this).data('nombre');
+
+            // Verificar si el producto ya está en la tabla
+            if ($('#productosSeleccionados tr[data-id="' + idProducto + '"]').length > 0) {
+                alert('Este producto ya ha sido seleccionado.');
+                return; // Salir si el producto ya está seleccionado
+            }
+
+            console.log("ID del producto seleccionado: " + idProducto);
+            // Añadir fila con los datos del producto
+            let nuevaFila = `
+ <tr data-id="${idProducto}" class="text-center">
+                <td class="fw-semibold">${nombreProducto}</td>
+                <td><input type="number" class="form-control center-input" name="detalles[${productoIndex}].precioCosto" step="0.1" required></td>
+                <td><input type="number" class="form-control center-input" name="detalles[${productoIndex}].cantidad" step="0.01" required></td>
+                <td><input type="number" class="form-control center-input" name="detalles[${productoIndex}].ganancia" step="0.5"></td>
+                <td class="iva-select-container" style="display: none;">
+                    <select class="form-select me-2" name="detalles[${productoIndex}].IVA">
+                        <option value=""></option>
+                        <option value="10.5">10.5%</option>
+                        <option value="21">21%</option>
+                    </select>
+                </td>
+                <td><button type="button" class="btn btn-danger btn-sm eliminarProducto">Eliminar</button></td>
+                <input type="hidden" name="detalles[${productoIndex}].producto.id" value="${idProducto}">
+            </tr>
+    `;
+            $('#productosSeleccionados').append(nuevaFila);
+
+            // Incrementar el contador para asegurar un índice único
+            productoIndex++;
+
+            // Limpiar resultados de búsqueda
+            $('#resultadosBusqueda').html('');
+            $('#buscarProducto').val('');
+            actualizarVisibilidadIVA();
+        });
+
+        // Delegación de eventos para eliminar productos de la tabla
+        $('#productosSeleccionados').on('click', '.eliminarProducto', function () {
+            $(this).closest('tr').remove();  // Eliminar la fila correspondiente
+            reindexarProductos();
+        });
+
+        // Función para reindexar los productos en la tabla
+        function reindexarProductos() {
+            $('#productosSeleccionados tr').each(function (index, fila) {
+                // Actualizar los nombres de los inputs con el nuevo índice
+                $(fila).find('input, select').each(function () {
+                    let nameAttr = $(this).attr('name');
+                    if (nameAttr) {
+                        let newName = nameAttr.replace(/\[\d+\]/, '[' + index + ']');
+                        $(this).attr('name', newName);
+                    }
+                });
+            });
+
+            // Actualizar el índice para el próximo producto a agregar
+            productoIndex = $('#productosSeleccionados tr').length;
+        }
+
+
+
+
+    </script>
+    <script>
+        (() => {
+            'use strict'
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            const forms = document.querySelectorAll('.needs-validation')
+
+
+            // Loop over them and prevent submission
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
+        <script>
+            function actualizarVisibilidadIVA() {
+                const conIVA = document.getElementById('coniva').value === 'true';
+                const thIva = document.getElementById('thIva');
+    
+                // Iterar sobre cada fila de producto y ajustar visibilidad del select de IVA
+                const filas = document.querySelectorAll('tr[data-id]');
+                filas.forEach(function (fila) {
+                    const ivaSelect = fila.querySelector('.iva-select-container');
+                    if (conIVA) {
+                        // Mostrar si conIVA es true
+                        thIva.style.display = '';
+                    } else {
+                        // Ocultar si conIVA es false
+                        thIva.style.display = 'none'; 
+                    }
+                });
+    
+                    // Iterar sobre cada fila de producto y ajustar visibilidad del select de IVA
+                filas.forEach(function (fila) {
+                const ivaSelect = fila.querySelector('.iva-select-container');
+                if (conIVA) {
+                    ivaSelect.style.display = ''; // Mostrar si conIVA es true
+                } else {
+                    ivaSelect.style.display = 'none'; // Ocultar si conIVA es false
+                }
+            });
+        }
+    
+            // Función para inicializar la visibilidad del encabezado y el select de IVA cuando no hay productos
+    function inicializarVisibilidadIVA() {
+        const conIVA = document.getElementById('coniva').value === 'true'; // Detecta el estado inicial de conIVA
+        const thIva = document.getElementById('thIva'); // Referencia al encabezado <th> del IVA
+
+        // Si conIVA es false, ocultamos el encabezado desde el principio
+        if (!conIVA) {
+            thIva.style.display = 'none'; // Ocultar el encabezado del IVA al cargar la página
+        }
+    }
+
+            // Al cargar la página, ejecutar la función para asegurar el estado inicial
+            document.addEventListener('DOMContentLoaded', function () {
+                inicializarVisibilidadIVA();
+            });
+    
+            // Cuando se cambie el valor del select conIVA, actualizar la visibilidad del select IVA
+            document.getElementById('coniva').addEventListener('change', function () {
+                actualizarVisibilidadIVA();
+            });
+    
+            //document.getElementById('tablaProductos').querySelector('tbody').insertAdjacentHTML('beforeend', nuevaFila);
+    
+    // Asegurarse de que el select IVA esté visible o no según el estado de conIVA
+            //actualizarVisibilidadIVA();
+    
+        </script>
+
+</body>
+
+</html>
