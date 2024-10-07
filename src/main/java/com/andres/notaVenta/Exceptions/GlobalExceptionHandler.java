@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
         if (ex.getMessage().contains("FOREIGN KEY (`vendedor_id`)")) {
             redirectUrl = "redirect:/admin/vendedores";
         } else if (ex.getMessage().contains("FOREIGN KEY (`producto_id`)")) {
-            redirectUrl = "redirect:/vendedor/productos/create";
+            redirectUrl = "redirect:/vendedor/productos/crear";
         } else if (ex.getMessage().contains("FOREIGN KEY (`cliente_id`)")) {
             redirectUrl = "redirect:/vendedor/clientes";
         }
