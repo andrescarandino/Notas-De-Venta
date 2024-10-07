@@ -38,11 +38,11 @@ public class GlobalExceptionHandler {
         String redirectUrl = "/"; // Ruta por defecto (inicio)
 
         if (ex.getMessage().contains("FOREIGN KEY (`vendedor_id`)")) {
-            redirectUrl = "redirect:/admin/vendedores"; // Redirigir a la página de vendedores
+            redirectUrl = "redirect:/admin/vendedores";
         } else if (ex.getMessage().contains("FOREIGN KEY (`producto_id`)")) {
-            redirectUrl = "redirect:/productos/create"; // Redirigir a la página de productos
+            redirectUrl = "redirect:/vendedor/productos/create";
         } else if (ex.getMessage().contains("FOREIGN KEY (`cliente_id`)")) {
-            redirectUrl = "redirect:/vendedor/clientes"; // Redirigir a la página de clientes
+            redirectUrl = "redirect:/vendedor/clientes";
         }
 
         return redirectUrl;
